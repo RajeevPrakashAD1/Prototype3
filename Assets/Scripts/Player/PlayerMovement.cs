@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         }*/
 
         Vector2 movementInput = PlayerInput.Player.Move.ReadValue<Vector2>();
-        Debug.Log("MovementInput" + movementInput);
+        //Debug.Log("MovementInput" + movementInput);
 
         //Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
 
