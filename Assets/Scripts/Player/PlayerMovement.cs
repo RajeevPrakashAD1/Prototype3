@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
-
+[RequireComponent(typeof(CharacterController),typeof(PlayerInput))]
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -22,29 +23,69 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
 
     private PlayerControls PlayerInput;
+    private PlayerInput playerInput;
     private Transform mainCamera;
     public LayerMask terrainLayerMask;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private GameObject shootPoint;
+    [SerializeField]
+    private GameObject bulletParent;
+
+
+    private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction shootAction;
+    private InputAction aimAction;
 
     private void Awake()
     {
         PlayerInput = new PlayerControls();
+        playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
+        moveAction = playerInput.actions["Move"];
+        lookAction = playerInput.actions["Look"];
+        shootAction = playerInput.actions["Shoot"];
+
     }
     private void OnEnable()
     {
         PlayerInput.Enable();
+        shootAction.performed += _ => ShootGun();
     }
 
     private void OnDisable()
     {
         PlayerInput.Disable();
+        shootAction.performed -= _ => ShootGun();
     }
     private void Start()
     {
         mainCamera = Camera.main.transform;
         
     }
+    void ShootGun()
+    {
+        GameObject bullett = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity, bulletParent.transform);
+        //Debug.Log("hit infor " + hit.point);
+        BulletCtrl bulletCtrl = bullett.GetComponent<BulletCtrl>();
+        RaycastHit hit;
+        
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, Mathf.Infinity))
+        {
+            
+            bulletCtrl.target = hit.point;
+            bulletCtrl.hit = true;
 
+        }
+        else
+        {
+            //Debug.Log("not hitting anything ....");
+            bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
+            bulletCtrl.hit = true;
+        }
+    }
     void Update()
     {
         /*groundedPlayer = controller.isGrounded;
@@ -53,7 +94,11 @@ public class PlayerMovement : MonoBehaviour
             playerVelocity.y = 0f;
         }*/
 
-        Vector2 movementInput = PlayerInput.Player.Move.ReadValue<Vector2>();
+        //Vector2 movementInput = PlayerInput.Player.Move.ReadValue<Vector2>();
+
+        Vector2 movementInput = moveAction.ReadValue<Vector2>();
+        
+        
         //Debug.Log("MovementInput" + movementInput);
 
         //Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
@@ -74,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
             // Adjust player's position to match terrain height
             Vector3 targetPosition = hit.point + Vector3.up * controller.height / 2f;
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * terrainFollowSpeed);
-           // transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+           //transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
         }
         // Changes the height position of the player..
@@ -85,5 +130,8 @@ public class PlayerMovement : MonoBehaviour
 
         /*playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);*/
+
+
+        //
     }
 }

@@ -34,7 +34,7 @@ public class EnemyPatrol : MonoBehaviour
         NavMeshHit hit;
         Vector3 randomDestination = Random.insideUnitSphere * 100f + transform.position;
         NavMesh.SamplePosition(randomDestination, out hit, 10000f, NavMesh.AllAreas);
-        Debug.Log("new position ->" + hit.position);
+       // Debug.Log("new position ->" + hit.position);
 
         // Set the destination to the random point
         navMeshAgent.SetDestination(hit.position);

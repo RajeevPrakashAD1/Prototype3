@@ -99,7 +99,7 @@ public class GenerateEnemy : MonoBehaviour
         NavMeshHit hit;
         Vector3 randomDestination = Random.insideUnitSphere * 200f + transform.position;
         NavMesh.SamplePosition(randomDestination, out hit, 10000f, NavMesh.AllAreas);
-        Debug.Log("new position ->" + hit.position);
+        //Debug.Log("new position ->" + hit.position);
         randomPosition = hit.position;
         return true;
     }
