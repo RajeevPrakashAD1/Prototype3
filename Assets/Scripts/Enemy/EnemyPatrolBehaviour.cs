@@ -39,4 +39,15 @@ public class EnemyPatrol : MonoBehaviour
         // Set the destination to the random point
         navMeshAgent.SetDestination(hit.position);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+          
+           
+           // Destroy(collision.gameObject);
+            GameManager.Instance.DamagePlayer(100);
+        }
+    }
 }

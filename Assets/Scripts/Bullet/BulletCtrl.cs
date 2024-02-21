@@ -7,8 +7,8 @@ public class BulletCtrl : MonoBehaviour
     [SerializeField]
     private GameObject bulletDecal;
 
-    private float speed = 50f;
-    private float timeToDestory = 3f;
+    private float speed = 170f;
+    private float timeToDestory = 1f;
     public Vector3 target { get; set; }
     public bool hit { get; set; }
     private void OnEnable()
@@ -29,9 +29,9 @@ public class BulletCtrl : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        //Debug.Log("Collided with: " + collision.gameObject.name);
+        Debug.Log("Collided with: " + collision.gameObject.tag);
 
         // Destroy the bullet and the collided object
         if (collision.gameObject.tag == "Enemy")

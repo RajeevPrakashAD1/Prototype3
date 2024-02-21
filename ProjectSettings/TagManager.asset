@@ -6,18 +6,21 @@ TagManager:
   tags:
   - Terrain
   - Enemy
+  - PlayerBullet
+  - BulletParent
+  - EnemyBulletParent
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - TerrainLayer
   - Bullet
-  - 
-  - 
-  - 
+  - Map
+  - EnemyBullet
+  - Enemy
   - 
   - 
   - 

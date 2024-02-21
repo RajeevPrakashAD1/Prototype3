@@ -28,7 +28,9 @@ public class EnemySurfaceAdjustment : MonoBehaviour
             float enemyHeight = GetEnemyHeight();
 
             // Adjust the enemy's position to stay on the terrain surface
-            transform.position = new Vector3(transform.position.x, terrainHeight + enemyHeight / 3f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, terrainHeight + enemyHeight/2f + 5f, transform.position.z);
+           
+
         }
         else
         {

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool groundedPlayer;
     [SerializeField]
-    private float playerSpeed = 2.0f;
+    private float playerSpeed = 12.0f;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
         PlayerInput = new PlayerControls();
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
+
+        //getting player inputs for using unity new input manager
         moveAction = playerInput.actions["Move"];
         lookAction = playerInput.actions["Look"];
         shootAction = playerInput.actions["Shoot"];
@@ -65,45 +67,44 @@ public class PlayerMovement : MonoBehaviour
         mainCamera = Camera.main.transform;
         
     }
-    void ShootGun()
+    public void ShootGun()
     {
+       
+        //instantiate bullet    
+      
+        bullet.transform.position =new Vector3(0, 0, 0);
         GameObject bullett = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity, bulletParent.transform);
-        //Debug.Log("hit infor " + hit.point);
+
+
         BulletCtrl bulletCtrl = bullett.GetComponent<BulletCtrl>();
+
+
+        //using raycast we can check where the bullet is hitting and set targer and hit true for bulletCtrl.
         RaycastHit hit;
-        
+
+
         if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, Mathf.Infinity))
         {
-            
+
             bulletCtrl.target = hit.point;
             bulletCtrl.hit = true;
 
         }
         else
         {
-            //Debug.Log("not hitting anything ....");
+
             bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
-            bulletCtrl.hit = true;
+            bulletCtrl.hit = false;
         }
     }
     void Update()
     {
-        /*groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }*/
-
-        //Vector2 movementInput = PlayerInput.Player.Move.ReadValue<Vector2>();
+       
 
         Vector2 movementInput = moveAction.ReadValue<Vector2>();
         
         
-        //Debug.Log("MovementInput" + movementInput);
-
-        //Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
-
-        //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+       
         Vector3 move = (mainCamera.forward*movementInput.y + mainCamera.right * movementInput.x);
         move.y = 0;
         controller.Move(move * Time.deltaTime * playerSpeed);
@@ -112,26 +113,18 @@ public class PlayerMovement : MonoBehaviour
         {
             gameObject.transform.forward = move;
         }
-
+        //Debug.Log("trying to hit");
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, terrainLayerMask))
         {
             // Adjust player's position to match terrain height
+
             Vector3 targetPosition = hit.point + Vector3.up * controller.height / 2f;
+            //Debug.Log("adjusting height" + hit.point);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * terrainFollowSpeed);
-           //transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+           
 
         }
-        // Changes the height position of the player..
-        /*if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }*/
-
-        /*playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);*/
-
-
-        //
+      
     }
 }

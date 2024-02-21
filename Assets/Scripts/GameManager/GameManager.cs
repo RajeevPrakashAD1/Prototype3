@@ -1,12 +1,12 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 100;
+    private int playerHealth = 10000;
     public HealthBar healthBar;
     
 
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+           
         }
         else
         {
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         // Check if player health is zero or below
         if (playerHealth <= 0)
         {
-            Debug.Log("Player has died!");
+            SceneManager.LoadScene(0);
             // Handle player death
         }
     }
