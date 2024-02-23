@@ -9,12 +9,14 @@ public class EnemyPatrol : MonoBehaviour
     private int currentWaypointIndex = 0;   // Index of the current waypoint
     private NavMeshAgent navMeshAgent;      // Reference to the NavMeshAgent component
     private Vector3 destination;            // Destination for the enemy to move towards
-
+    public EnemyData enemyData;
+    
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = enemyData.speed;
+      
 
-     
     }
 
     void Update()

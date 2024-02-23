@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 10000;
+    private int playerHealth = 1300;
     public HealthBar healthBar;
     
 

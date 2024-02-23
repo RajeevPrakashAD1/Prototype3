@@ -1,53 +1,3 @@
-/*using UnityEngine;
-using UnityEngine.AI;
-
-public class EnemySpawner : MonoBehaviour
-{
-    public GameObject enemyPrefab;
-    public Terrain terrain;
-    public GameObject enemiesParent; // Reference to the parent GameObject for enemies
-    *//*public NavMesh navMeshSurface;*//*
-
-    private void Start()
-    {
-        SpawnEnemies();
-    }
-
-    private void SpawnEnemies()
-    {
-        // Get terrain size
-        Vector3 terrainSize = terrain.terrainData.size;
-
-        for (int i = 0; i < 10; i++) // Spawn 10 enemies
-        {
-            // Generate random position within terrain bounds
-            Vector3 randomPosition = new Vector3(
-                Random.Range(0f, terrainSize.x),
-                0f,
-                Random.Range(0f, terrainSize.z)
-            );
-
-            // Convert random position to world space
-            Vector3 worldPosition = terrain.transform.position + randomPosition;
-
-            // Get terrain height at the random position
-            float terrainHeight = terrain.SampleHeight(worldPosition);
-
-            // Set enemy position with terrain height
-            Vector3 enemyPosition = new Vector3(worldPosition.x, terrainHeight, worldPosition.z);
-
-            // Spawn enemy at the calculated position
-            GameObject newEnemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
-
-            // Set the parent of the instantiated enemy to the enemiesParent GameObject
-            if (enemiesParent != null)
-            {
-                newEnemy.transform.parent = enemiesParent.transform;
-            }
-        }
-    }
-}
-*/
 
 using System.Collections;
 using System.Collections.Generic;
@@ -60,6 +10,7 @@ public class GenerateEnemy : MonoBehaviour
     public Terrain terrain;
     public GameObject enemiesParent;
     public float spawnRadius = 10f;
+        
 
     private void Start()
     {

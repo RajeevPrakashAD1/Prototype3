@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - BulletParent
   - EnemyBulletParent
+  - BigEnemy
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Map
   - EnemyBullet
   - Enemy
-  - 
+  - BigEnemy
   - 
   - 
   - 

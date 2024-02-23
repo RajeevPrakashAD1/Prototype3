@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWaypointIndex: 0
+  enemyData: {fileID: 11400000, guid: 4d93fdc5bb010c04b80d6518d8a718fb, type: 2}
 --- !u!136 &7200142575151441666
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -270,8 +271,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9218819817203254772, guid: c45874a5dfe06a94c8990eb11ff8331b, type: 3}
   bulletParent: {fileID: 0}
   bulletSpawnPoint: {fileID: 7582991584503319647}
-  shootingInterval: 3
-  shootingRange: 50
+  enemyData: {fileID: 11400000, guid: 4d93fdc5bb010c04b80d6518d8a718fb, type: 2}
 --- !u!1 &5017644364923337082
 GameObject:
   m_ObjectHideFlags: 0
