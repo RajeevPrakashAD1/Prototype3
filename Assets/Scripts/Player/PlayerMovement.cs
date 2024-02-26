@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float terrainFollowSpeed = 200f;
     private CharacterController controller;
 
-    private PlayerControls PlayerInput;
+    //private PlayerControls PlayerInput;
     private PlayerInput playerInput;
     private Transform mainCamera;
     public LayerMask terrainLayerMask;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject shootPoint;
     [SerializeField]
     private GameObject bulletParent;
-
+   
 
     private InputAction moveAction;
     private InputAction lookAction;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        PlayerInput = new PlayerControls();
+        //PlayerInput = new PlayerControls();
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
 
@@ -51,52 +51,13 @@ public class PlayerMovement : MonoBehaviour
         shootAction = playerInput.actions["Shoot"];
 
     }
-    private void OnEnable()
-    {
-        PlayerInput.Enable();
-        shootAction.performed += _ => ShootGun();
-    }
-
-    private void OnDisable()
-    {
-        PlayerInput.Disable();
-        shootAction.performed -= _ => ShootGun();
-    }
+   
     private void Start()
     {
         mainCamera = Camera.main.transform;
         
     }
-    public void ShootGun()
-    {
-       
-        //instantiate bullet    
-      
-        bullet.transform.position =new Vector3(0, 0, 0);
-        GameObject bullett = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity, bulletParent.transform);
-
-
-        BulletCtrl bulletCtrl = bullett.GetComponent<BulletCtrl>();
-
-
-        //using raycast we can check where the bullet is hitting and set targer and hit true for bulletCtrl.
-        RaycastHit hit;
-
-
-        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, Mathf.Infinity))
-        {
-
-            bulletCtrl.target = hit.point;
-            bulletCtrl.hit = true;
-
-        }
-        else
-        {
-
-            bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
-            bulletCtrl.hit = false;
-        }
-    }
+  
     void Update()
     {
        

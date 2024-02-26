@@ -10,6 +10,12 @@ TagManager:
   - BulletParent
   - EnemyBulletParent
   - BigEnemy
+  - Gun
+  - Gun1
+  - Gun2
+  - Gun3
+  - Gun4
+  - ReloadingText
   layers:
   - Default
   - TransparentFX
@@ -23,7 +29,7 @@ TagManager:
   - EnemyBullet
   - Enemy
   - BigEnemy
-  - 
+  - PlayerGun
   - 
   - 
   - 

@@ -6,12 +6,15 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 1300;
+    private int playerHealth = 11300;
     public HealthBar healthBar;
+    public GameObject player;
     
 
     // Current weapon
-    private string currentWeapon = "Pistol";
+    public GameObject currentWeapon;
+    //collided weapon
+    public GameObject collidedWeapon;
 
     // Public property to access the singleton instance
     public static GameManager Instance
@@ -43,11 +46,17 @@ public class GameManager : MonoBehaviour
     }
 
     // Public property to access current weapon
-    public string CurrentWeapon
+    public GameObject CurrentWeapon
     {
         get { return currentWeapon; }
         set { currentWeapon = value; }
     }
+    public GameObject CollidedWeapon
+    {
+        get { return collidedWeapon; }
+        set { collidedWeapon = value; }
+    }
+
 
     private void Awake()
     {
@@ -78,9 +87,9 @@ public class GameManager : MonoBehaviour
     }
 
     // Example method to switch the current weapon
-    public void SwitchWeapon(string newWeapon)
+    public void SwitchWeapon(GameObject newWeapon)
     {
         currentWeapon = newWeapon;
-        Debug.Log("Player switched to " + newWeapon);
+        Debug.Log("Player switched to ");
     }
 }

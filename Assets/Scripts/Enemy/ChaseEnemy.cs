@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyChase : MonoBehaviour
 {
-    public float chaseRadius = 100f; // Radius within which enemies start chasing the player
+    public float chaseRadius = 200f; // Radius within which enemies start chasing the player
     //public LayerMask playerLayer;   // Layer mask to identify the player
 
     private NavMeshAgent navMeshAgent; // Reference to the NavMeshAgent component

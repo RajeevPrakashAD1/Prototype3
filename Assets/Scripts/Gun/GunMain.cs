@@ -1,21 +1,150 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GunMain : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GunData gunData;
+
     private PlayerInput playerInput;
-    void Start()
+    private InputAction shootAction;
+    private InputAction reloadAction;
+
+    [SerializeField] private GameObject shootPoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletParent;
+
+
+    private Transform mainCamera;
+    private bool canShoot = true; // Control fire rate
+    private float nextShootTime = 0f; // Time for next allowed shot
+    private float currentAmmo; // Current ammo count
+    private float maxAmmo; // Maximum ammo count (magazine size)
+    private float reloadTime; // Reload time
+    public bool equipped;
+    public Text reloadText;
+   
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+        {
+            shootAction = playerInput.actions["Shoot"];
+            reloadAction = playerInput.actions["Reload"];
+
+        }
+        else
+        {
+            Debug.LogWarning("PlayerInput component not found.");
+        }
+
+        mainCamera = Camera.main.transform;
+
+        // Initialize ammo values based on gun data
+        maxAmmo = gunData.magazineSize;
+        
+        currentAmmo = maxAmmo;
+       // Debug.Log("maxammo " + maxAmmo + " " + currentAmmo);
+       
+        reloadTime = gunData.reloadTime;
+    }
+
+    private void OnEnable()
+    {
+        shootAction.performed += _ => ShootGun();
+        reloadAction.performed += _ => Reload();
+    }
+
+    private void OnDisable()
+    {
+        shootAction.performed -= _ => ShootGun();
+        reloadAction.performed -= _ => Reload();
+    }
+    private void Start()
+    {
+        GameObject reloadTextObject = GameObject.FindWithTag("ReloadingText");
+
+        // Check if the GameObject is found
+        if (reloadTextObject != null)
+        {
+            // Get the Text component from the GameObject
+            reloadText = reloadTextObject.GetComponent<Text>();
+        }
+       }
+    private void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void ShootGun()
     {
-        
+
+       //if(equipped) Debug.Log("equipped" + equipped + " " + currentAmmo +"maxammo "+ maxAmmo + " "+ nextShootTime +" "+Time.time);
+             
+        if (equipped && canShoot && Time.time >= nextShootTime)
+        {
+            //Debug.Log("initiating bullet");
+            if (currentAmmo > 0)
+            {
+
+
+                GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, Quaternion.identity);
+                BulletCtrl bulletCtrl = bullet.GetComponent<BulletCtrl>();
+
+                // Set bullet damage
+                bulletCtrl.damage = gunData.damage;
+
+                RaycastHit hit;
+                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, Mathf.Infinity))
+                {
+                    bulletCtrl.target = hit.point;
+                    bulletCtrl.hit = true;
+                }
+                else
+                {
+                    bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
+                    bulletCtrl.hit = false;
+                }
+
+                // Reduce ammo count
+                currentAmmo--;
+
+                // Control fire rate
+                nextShootTime = Time.time + 1f / gunData.fireRate;
+                // Debug.Log("making can shoot false");
+                canShoot = false;
+                Invoke("ResetShoot", 1f / gunData.fireRate);
+            }
+            else
+            {
+                Reload();
+            }
+        }
+    }
+
+    private void ResetShoot()
+    {
+        //Debug.Log("making reshoot true");
+        canShoot = true;
+    }
+
+    public void Reload()
+    {
+
+        // Reload logic
+        if (reloadText) reloadText.text = "Realoading....";
+        currentAmmo = maxAmmo; // Refill ammo
+        Debug.Log("Reloading..."+currentAmmo+ " "+ maxAmmo);
+        Invoke("ResetReload", reloadTime); // Reset reload time
+        canShoot = false;
+    }
+
+    private void ResetReload()
+    {
+        Debug.Log("Reload complete.");
+        canShoot = true;
+        if (reloadText) reloadText.text = "";
     }
 }

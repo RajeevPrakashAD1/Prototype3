@@ -11,6 +11,7 @@ public class BulletCtrl : MonoBehaviour
     private float timeToDestory = 1f;
     public Vector3 target { get; set; }
     public bool hit { get; set; }
+    public float damage { get; set; }
     private void OnEnable()
     {
         Destroy(gameObject, timeToDestory);
@@ -31,7 +32,7 @@ public class BulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.tag);
+        //Debug.Log("Collided with: " + collision.gameObject.tag);
 
         // Destroy the bullet and the collided object
         if (collision.gameObject.tag == "Enemy")

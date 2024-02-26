@@ -38,7 +38,7 @@ public class BigEnemy : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         // Check if the collision is with a player bullet
-        Debug.Log("getting big enemy collided" + collision.gameObject.tag);
+        //Debug.Log("getting big enemy collided" + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             Debug.Log("calling collisin");
