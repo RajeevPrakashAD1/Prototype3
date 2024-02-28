@@ -6,9 +6,10 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 11300;
+    private int playerHealth = 12900;
     public HealthBar healthBar;
     public GameObject player;
+    public LevelData levelData;
     
 
     // Current weapon
@@ -37,7 +38,48 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    private void Awake()
+    {
+        //Debug.Log("calling gameManagerAwake" + healthBar + player);
+        // Ensure there's only one instance of the GameManager
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
 
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        //levelData = GameManager.instance.levelData;
+        
+    }
+   
+    public void Reset()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            //Debug.Log("didnt get playere");
+        }
+        GameObject healthBarObject = GameObject.FindGameObjectWithTag("HealthBar");
+        if(healthBarObject != null)
+        {
+            //Debug.Log("got health bar");
+            healthBar = healthBarObject.GetComponent<HealthBar>();
+        }
+        else
+        {
+            Debug.Log("didnt get healthBar");
+        }
+        playerHealth = 12900;
+    }
+
+    public void SetLevelData(LevelData data)
+    {
+        levelData = data;
+    }
     // Public property to access player health
     public int PlayerHealth
     {
@@ -58,20 +100,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Awake()
-    {
-        // Ensure there's only one instance of the GameManager
-        if (instance == null)
-        {
-            instance = this;
-           
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
+  
     // Example method to damage the player
     public void DamagePlayer(int damageAmount)
     {

@@ -16,6 +16,10 @@ TagManager:
   - Gun3
   - Gun4
   - ReloadingText
+  - HealthBar
+  - PickGunButton
+  - NextLevelButton
+  - Inventory Item
   layers:
   - Default
   - TransparentFX

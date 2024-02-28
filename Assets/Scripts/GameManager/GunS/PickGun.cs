@@ -8,12 +8,22 @@ public class PickGun : MonoBehaviour
     [SerializeField]
     private PlayerInput playerInput;
     private InputAction pickAction;
-    public GameObject canvasButton;
+    public GameObject PickGunButton;
+    private GameObject NewGun;
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        PickGunButton = GameObject.Find("PickGun");
+        if(PickGunButton != null)
+        {
+            //Debug.Log("Pickgun is not  null");
+            PickGunButton.SetActive(false);
+        }
+        Player = GameObject.FindWithTag("Player");
+        
         pickAction = playerInput.actions["PickGun"];
+
     }
     private void OnEnable()
     {
@@ -40,8 +50,8 @@ public class PickGun : MonoBehaviour
         gm.currentWeapon = gm.collidedWeapon;
         ChangeGun(gm.currentWeapon);
         gm.currentWeapon.SetActive(false);
-        
-        canvasButton.SetActive(false);
+        gm.currentWeapon = NewGun;
+        PickGunButton.SetActive(false);
        
     }
 
@@ -49,18 +59,13 @@ public class PickGun : MonoBehaviour
     {
         // Find the child object with the "Gun" tag
         Transform oldGunTransform = null;
-        if (Player.transform.childCount > 1)
+        Debug.Log("player" + Player);
+        if(Player != null) Debug.Log("player not null");
+        if (Player && Player.transform && Player.transform.childCount > 1)
         {
             oldGunTransform = Player.transform.GetChild(1);
         }
-        for (int i = 0; i < Player.transform.childCount; i++)
-        {
-            // Get the child transform at index i
-            Transform childTransform = Player.transform.GetChild(i);
-
-            // Log the name of the child object
-           // Debug.Log("Child Object tag: "+ i + " " + childTransform.tag);
-        }
+       
 
         //Debug.Log("old gun" + oldGunTransform.position);
         if (oldGunTransform != null)
@@ -79,17 +84,13 @@ public class PickGun : MonoBehaviour
             instantiatedNewGun.layer = 12;
             GunMain gunMain = instantiatedNewGun.GetComponent<GunMain>();
             gunMain.equipped = true;
+            newGun = instantiatedNewGun;
             
         }
         else
         {
             Debug.Log("No gun object found as a child of the player.");
-            Vector3 oldGunPosition = new Vector3(0.5599976f, 0f, 0.590004f);
-            Quaternion oldGunRotation = new Quaternion(0f, 0f, 0f, 0f);
-            GameObject instantiatedNewGun = Instantiate(newGun, oldGunPosition, oldGunRotation, Player.transform);
-            instantiatedNewGun.tag = "Gun";
-            GunMain gunMain = instantiatedNewGun.GetComponent<GunMain>();
-            gunMain.equipped = true;
+         
 
 
 

@@ -10,17 +10,21 @@ public class GenerateEnemy : MonoBehaviour
     public Terrain terrain;
     public GameObject enemiesParent;
     public float spawnRadius = 10f;
+    private float numOfEnemies;
         
 
     private void Start()
     {
+       
+        numOfEnemies = GameManager.Instance.levelData.numberOfSmallEnemies;
         SpawnEnemies();
     }
 
     private void SpawnEnemies()
     {
         // Generate enemies within the NavMesh area
-        for (int i = 0; i < 100; i++) // Spawn 100 enemies
+        Debug.Log("No of enemies spawn + " + numOfEnemies);
+        for (int i = 0; i < numOfEnemies; i++) // Spawn 100 enemies
         {
             // Sample a random position within the NavMesh area
             Vector3 randomPosition;

@@ -6,11 +6,11 @@ public class BigEnemy : MonoBehaviour
     public int maxHits = 15; // Maximum number of hits allowed before destruction
     private int currentHits = 0; // Current number of hits
     public Slider slider;
-
+    public LevelProgression levelProg;
     public void Start()
     {
-        slider.maxValue = 1300f;
-        slider.value = 1300f;
+        slider.maxValue = 50f;
+        slider.value = 50f;
     }
 
     public void Update()
@@ -18,6 +18,8 @@ public class BigEnemy : MonoBehaviour
         if(slider.value <= 0)
         {
             Destroy(gameObject);
+            levelProg.KillBigEnemy();
+            
         }
     }
     public void SetHealth(int bulletDamage)

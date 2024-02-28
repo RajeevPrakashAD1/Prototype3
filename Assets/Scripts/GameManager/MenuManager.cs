@@ -17,5 +17,28 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log("Starting game...");
         SceneManager.LoadScene(1);
+        
+    }
+
+    private IEnumerator LoadGameScene()
+    {
+        // Load the game scene
+
+        
+        // Wait for the scene to finish loading
+        yield return new WaitForSeconds(4f);
+       
+
+        // Access the GameManager instance and call its Reset method
+        Debug.Log("accessing something");
+        if (GameManager.Instance != null)
+        {
+            Debug.Log("calling reset");
+            GameManager.Instance.Reset();
+        }
+        else
+        {
+            Debug.Log("no instance found");
+        }
     }
 }

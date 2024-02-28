@@ -10,7 +10,7 @@ public class GunSpawner : MonoBehaviour
     private int currentGunIndex = 0;
     private int totalSpawnedCount = 0;
 
-    void Start()
+    void Awake()
     {
         SpawnGuns();
     }
