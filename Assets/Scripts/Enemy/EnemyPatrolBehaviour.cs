@@ -48,8 +48,9 @@ public class EnemyPatrol : MonoBehaviour
         {
           
            
-           // Destroy(collision.gameObject);
-            GameManager.Instance.DamagePlayer(100);
+             //Destroy(collision.gameObject);
+            GameManager.Instance.DamagePlayer(500);
+            Destroy(gameObject);
         }
     }
 }

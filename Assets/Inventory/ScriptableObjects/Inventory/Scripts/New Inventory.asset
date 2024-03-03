@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195d52d98e3fcd0438e028f5f76e73a7, type: 3}
+  m_Name: New Inventory
+  m_EditorClassIdentifier: 
+  database: {fileID: 11400000, guid: e9292ccaf5b55d84d8f25e6c6f490a05, type: 2}
+  Container:
+    Items:
+    - ID: -1
+      item:
+        Name: ch10
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch11
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch12
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch13
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch14
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch15
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch16
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch17
+        Id: -1
+      amount: 0
+    - ID: -1
+      item:
+        Name: ch18
+        Id: -1
+      amount: 0
+  savePath: /inventory.save

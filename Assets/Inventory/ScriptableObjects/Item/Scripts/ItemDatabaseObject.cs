@@ -4,29 +4,33 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName ="New Item Database",menuName ="Inventory System/Item/Database")]
-public class ItemDatabaseObject : ScriptableObject,ISerializationCallbackReceiver
+public class ItemDatabaseObject : ScriptableObject
 {
     // Start is called before the first frame update
-    public ItemObjects[] Items;
-   
-    public Dictionary<ItemObjects, int> GetId = new Dictionary<ItemObjects, int>();
-  
-    public Dictionary<int,ItemObjects> GetItem = new Dictionary<int,ItemObjects>();
+    public ItemObject[] Items;
+    //public InventoryObject inventory;
+    
+    public Dictionary<int,ItemObject> GetItem = new Dictionary<int,ItemObject>();
 
-    public void OnAfterDeserialize()
+    public void OnEnable()
     {
-        Debug.Log("database called");
-        GetId = new Dictionary<ItemObjects, int>();
-        GetItem = new Dictionary<int,ItemObjects>();
+        Debug.Log("database called "+Items.Length);
+      
+      
         for(int i = 0; i < Items.Length; i++)
         {
-            GetId.Add(Items[i], i);
-            GetItem.Add(i, Items[i]);
+            //Debug.Log("item name", Item[i].Name);
+            //Items[i].Id = i;
+            //Items[i].name = "something";
+            //Debug.Log(Items[i].Id + "  " + Items[i].type);
+            GetItem.Add(Items[i].Id, Items[i]);
+            //inventory.AddItem(new Item(Items[i]),1);
+            
         }
     }
 
-    public void OnBeforeSerialize()
+ /*   public void OnBeforeSerialize()
     {
-        //throw new System.NotImplementedException();
-    }
+        GetItem = new Dictionary<int, ItemObject>();
+    }*/
 }

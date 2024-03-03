@@ -6,10 +6,11 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 12900;
+    private int playerHealth = 9900;
     public HealthBar healthBar;
     public GameObject player;
     public LevelData levelData;
+    private float playerSpeed = 12f;
     
 
     // Current weapon
@@ -73,7 +74,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("didnt get healthBar");
         }
-        playerHealth = 12900;
+        playerHealth = 9900;
+        playerSpeed = 12f;
+
     }
 
     public void SetLevelData(LevelData data)
@@ -86,7 +89,11 @@ public class GameManager : MonoBehaviour
         get { return playerHealth; }
         set { playerHealth = value; }
     }
-
+    public float PlayerSpeed
+    {
+        get { return playerSpeed; }
+        set { playerSpeed = value; }
+    }
     // Public property to access current weapon
     public GameObject CurrentWeapon
     {
@@ -98,6 +105,7 @@ public class GameManager : MonoBehaviour
         get { return collidedWeapon; }
         set { collidedWeapon = value; }
     }
+
 
 
   
@@ -114,7 +122,27 @@ public class GameManager : MonoBehaviour
             // Handle player death
         }
     }
+    public void HealthIncrease(int IncreaseAmount)
+    {
+        playerHealth += IncreaseAmount;
+        healthBar.SetHealth(playerHealth);
 
+        // Check if player health is zero or below
+        if (playerHealth <= 0)
+        {
+            SceneManager.LoadScene(0);
+            // Handle player death
+        }
+    }
+
+    public void SpeedIncrease(float amount)
+    {
+        PlayerSpeed *= amount;
+    }
+    public void SpeedDecrease(float amount)
+    {
+        PlayerSpeed /= amount;
+    }
     // Example method to switch the current weapon
     public void SwitchWeapon(GameObject newWeapon)
     {

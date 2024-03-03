@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0e603844b166d43937744cf34526a7, type: 3}
   m_Name: New Food Object
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1748661056775943019, guid: efef406a061312c48834955243cca2a7, type: 3}
-  type: 0
+  Id: 2
+  img: {fileID: -1247134969, guid: 2813269bce1a98645b10365288c90bba, type: 3}
+  type: 1
   description: 
-  energy: 10
+  energy: 350

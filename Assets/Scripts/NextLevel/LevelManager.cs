@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
         //Debug.Log("accessing something");
         if (GameManager.Instance != null)
         {
-            Debug.Log("calling reset");
+            //Debug.Log("calling reset");
             GameManager.Instance.Reset();
         }
         else

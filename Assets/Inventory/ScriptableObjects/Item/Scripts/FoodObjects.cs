@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Food Object", menuName = "Inventory System/Item/Food")]
-public class FoodObjects : ItemObjects
+public class FoodObjects : ItemObject
 {
     // Start is called before the first frame update
-    public float energy;
+    public int energy;
     void Awake()
     {
         type = ItemType.Food;

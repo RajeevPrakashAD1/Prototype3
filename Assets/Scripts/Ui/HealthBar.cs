@@ -7,13 +7,13 @@ public class HealthBar : MonoBehaviour
 
     public void Start()
     {
-        slider.maxValue = 12900f;
-        slider.value = 12900f;
+        slider.maxValue = 9900f;
+        slider.value = 9900f;
     }
 
     public void SetHealth(int health)
     {
-        //Debug.Log("setting health");
+        //Debug.Log("setting health"+health);
         slider.value = health;
     }
 }

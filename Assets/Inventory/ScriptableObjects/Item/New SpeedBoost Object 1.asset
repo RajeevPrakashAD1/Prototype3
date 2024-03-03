@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936a6924224156c4b8437627a3b9e261, type: 3}
   m_Name: New SpeedBoost Object 1
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  Id: 5
+  img: {fileID: -1833016111, guid: 2813269bce1a98645b10365288c90bba, type: 3}
   type: 2
   description: 
   Speedmultiplier: 4

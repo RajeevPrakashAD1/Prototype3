@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool groundedPlayer;
     [SerializeField]
-    private float playerSpeed = 12.0f;
-    [SerializeField]
+    private float playerSpeed;
+    
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
@@ -56,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
     {
         mainCamera = Camera.main.transform;
         
+
+        
     }
   
     void Update()
@@ -63,9 +65,9 @@ public class PlayerMovement : MonoBehaviour
        
 
         Vector2 movementInput = moveAction.ReadValue<Vector2>();
-        
-        
-       
+        playerSpeed = GameManager.Instance.PlayerSpeed;
+
+
         Vector3 move = (mainCamera.forward*movementInput.y + mainCamera.right * movementInput.x);
         move.y = 0;
         controller.Move(move * Time.deltaTime * playerSpeed);
