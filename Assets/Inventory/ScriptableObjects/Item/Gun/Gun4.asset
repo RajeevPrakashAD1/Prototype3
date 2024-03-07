@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 990d6c105fd0ec040a7de53fd1fc82a1, type: 3}
-  m_Name: Gun3
+  m_Name: Gun4
   m_EditorClassIdentifier: 
   gunName: Gun1
-  damage: 20
-  fireRate: 20
-  magazineSize: 5
-  reloadTime: 0.5
-  bulletPrefab: {fileID: 9218819817203254772, guid: fbc65607f3bd0f849909a00df5557f91, type: 3}
+  damage: 10
+  fireRate: 10
+  magazineSize: 10
+  reloadTime: 1
+  img: {fileID: 894848868, guid: dc0ece44f72b4264c8dd8c284b50a6c7, type: 3}

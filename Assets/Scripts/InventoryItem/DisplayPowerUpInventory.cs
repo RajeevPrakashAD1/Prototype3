@@ -5,40 +5,24 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-
-public class DisplayInventory : MonoBehaviour
+public class DisplayPowerUpInventory : MonoBehaviour
 {
-    public GameObject InventoryPanel;
-    /*public MouseItem mouseItem = new MouseItem();
+    public MouseItem mouseItem = new MouseItem();
     public GameObject inventoryPowerUpPrefab;
-    public GameObject inventoryGunPrefab;
-    // public GameObject GunSlot;
-    
+  
+ 
+   
     public PowerUpInventory inventory;
+    public ItemDatabaseObject database;
     public int X_START;
     public int Y_START;
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
-
-
-
-    public int X_START_GUN;
-    public int Y_START_GUN;
-    public int X_SPACE_BETWEEN_ITEM_GUN;
-    public int NUMBER_OF_COLUMN_GUN;
-    public int Y_SPACE_BETWEEN_ITEMS_GUN;
-
-    public int X_START_BULLET;
-    public int Y_START_BULLET;
-    public int X_SPACE_BETWEEN_ITEM_BULLET;
-    public int NUMBER_OF_COLUMN_BULLET;
-    public int Y_SPACE_BETWEEN_ITEMS_BULLET;
-
     public EquipPowerUp equip;
-    Dictionary<GameObject, InventoryPowerUpSlot> PowerUpitemsDisplayed = new Dictionary<GameObject, InventoryPowerUpSlot>();
-    Dictionary<GameObject, InventoryGunSlot> GunitemsDisplayed = new Dictionary<GameObject, InventoryGunSlot>();
-    //Dictionary<GameObject, InventoryPowerUpSlot> BulletitemsDisplayed = new Dictionary<GameObject, InventoryPowerUpSlot>();
+    Dictionary<GameObject, InventorySlot> PowerUpitemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+
+
     void Start()
     {
         CreateSlots();
@@ -49,11 +33,12 @@ public class DisplayInventory : MonoBehaviour
     {
         UpdateSlots();
     }
+
     public void CreateSlots()
     {
-        PowerUpitemsDisplayed = new Dictionary<GameObject, InventoryPowerUpSlot>();
+        PowerUpitemsDisplayed = new Dictionary<GameObject, InventorySlot>();
         // Debug.Log("inventory length++" + inventory.Container.Items.Length);
-        for (int i = 0; i < inventory.Container.PowerUpItems.Length; i++)
+        for (int i = 0; i < inventory.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPowerUpPrefab, Vector3.zero, Quaternion.identity, transform);
             obj.GetComponent<RectTransform>().localPosition = GetPowerUpSlotPosition(i);
@@ -66,21 +51,16 @@ public class DisplayInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
 
-            PowerUpitemsDisplayed.Add(obj, inventory.Container.PowerUpItems[i]);
+            PowerUpitemsDisplayed.Add(obj, inventory.Items[i]);
             // Debug.Log(inventory.Container.Items[i].item.Name);
 
         }
-        for (int i = 0; i < inventory.Container.GunItems.Length; i++)
-        {
-            var obj = Instantiate(inventoryGunPrefab, Vector3.zero, Quaternion.identity, transform);
-            obj.GetComponent<RectTransform>().localPosition = GetGunSlotPosition(i);
-            GunitemsDisplayed.Add(obj, inventory.Container.GunItems[i]);
-        }
+        
     }
 
     public void UpdateSlots()
     {
-        foreach (KeyValuePair<GameObject, InventoryPowerUpSlot> _slot in PowerUpitemsDisplayed)
+        foreach (KeyValuePair<GameObject, InventorySlot> _slot in PowerUpitemsDisplayed)
         {
             //Debug.Log(_slot.Key + "   " + _slot.Value.ID + " "+ _slot.Value.item.Name);
 
@@ -108,7 +88,7 @@ public class DisplayInventory : MonoBehaviour
                 }
                 Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
 
-                _slot.Key.transform.GetComponent<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].img;
+                _slot.Key.transform.GetComponent<Image>().sprite = database.GetItem[_slot.Value.item.Id].img;
                 _slot.Key.transform.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
 
@@ -121,19 +101,13 @@ public class DisplayInventory : MonoBehaviour
             }
         }
     }
+
     public Vector3 GetPowerUpSlotPosition(int i)
     {
         float pos = (X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)));
         Debug.Log("position " + pos);
-        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)) + 400, Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
+        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN))+450, Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
-    public Vector3 GetGunSlotPosition(int i)
-    {
-        //float pos = (X_START_GUN + (X_SPACE_BETWEEN_ITEM_GUN * (i % NUMBER_OF_COLUMN_GUN)));
-        //Debug.Log("position " + pos);
-        return new Vector3(X_START_GUN + (X_SPACE_BETWEEN_ITEM_GUN * (i % NUMBER_OF_COLUMN_GUN)) - 400, Y_START_GUN + (-Y_SPACE_BETWEEN_ITEMS_GUN * (i / NUMBER_OF_COLUMN_GUN)) + 600, 0f);
-    }
-
 
     private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -150,7 +124,7 @@ public class DisplayInventory : MonoBehaviour
         if (PowerUpitemsDisplayed.ContainsKey(obj) && PowerUpitemsDisplayed[obj].ID >= 1)
         {
             // Handle the click event for the item
-            ItemObject clickItem = inventory.database.GetItem[PowerUpitemsDisplayed[obj].ID];
+            ItemObject clickItem = database.GetItem[PowerUpitemsDisplayed[obj].ID];
             string type = clickItem.type.ToString();
             if (type == "Food")
             {
@@ -199,7 +173,7 @@ public class DisplayInventory : MonoBehaviour
 
             var img = mouseObject.AddComponent<Image>();
             // Debug.Log("get insied"+ itemsDisplayed[obj].ID +"...."+ inventory.database.GetItem[itemsDisplayed[obj].ID].img);
-            img.sprite = inventory.database.GetItem[PowerUpitemsDisplayed[obj].ID].img;
+            img.sprite = database.GetItem[PowerUpitemsDisplayed[obj].ID].img;
             img.raycastTarget = false;
         }
         mouseItem.obj = mouseObject;
@@ -209,11 +183,11 @@ public class DisplayInventory : MonoBehaviour
     {
         if (mouseItem.hoverObj)
         {
-            inventory.MovePowerUpItem(PowerUpitemsDisplayed[obj], PowerUpitemsDisplayed[mouseItem.hoverObj]);
+            inventory.MoveItem(PowerUpitemsDisplayed[obj], PowerUpitemsDisplayed[mouseItem.hoverObj]);
         }
         else
         {
-            inventory.RemovePowerUpItem(PowerUpitemsDisplayed[obj].item);
+            inventory.RemoveItem(PowerUpitemsDisplayed[obj].item);
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;
@@ -223,20 +197,9 @@ public class DisplayInventory : MonoBehaviour
         if (mouseItem.obj != null)
             mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
     }
-*/
 
-    public void Toggle()
-    {
 
-        if (InventoryPanel.activeInHierarchy == false)
-        {
-            InventoryPanel.SetActive(true);
-        }
-        else
-        {
-            InventoryPanel.SetActive(false);
-        }
-    }
+    
 
 
 
@@ -244,10 +207,16 @@ public class DisplayInventory : MonoBehaviour
 
 
 
+
+
+
+
+/*
 public class MouseItem
 {
     public GameObject obj;
-    public InventorySlot item;
-    public InventorySlot hoverItem;
+    public InventoryPowerUpSlot item;
+    public InventoryPowerUpSlot hoverItem;
     public GameObject hoverObj;
-}
+}*/
+

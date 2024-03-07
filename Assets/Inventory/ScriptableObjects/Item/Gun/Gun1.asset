@@ -17,4 +17,4 @@ MonoBehaviour:
   fireRate: 10
   magazineSize: 20
   reloadTime: 2
-  bulletPrefab: {fileID: 9218819817203254772, guid: fbc65607f3bd0f849909a00df5557f91, type: 3}
+  img: {fileID: 858414502, guid: dc0ece44f72b4264c8dd8c284b50a6c7, type: 3}

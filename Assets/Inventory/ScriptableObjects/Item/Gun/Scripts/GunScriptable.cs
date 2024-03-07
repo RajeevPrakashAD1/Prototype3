@@ -8,7 +8,7 @@ public class GunData : ScriptableObject
     public float fireRate;
     public int magazineSize;
     public float reloadTime;
-    public GameObject bulletPrefab;
+    public Sprite img;
    
    
 }

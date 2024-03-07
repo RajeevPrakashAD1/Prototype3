@@ -4,32 +4,22 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public InventoryObject inventory;
+    public PowerUpInventory inventory;
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("collided with object");
-        //Debug.Log("player collided" + collision.gameObject);
-        if(collision.transform.tag == "Inventory Item")
+        if (collision.transform.CompareTag("Inventory Item"))
         {
             ItemObject data = collision.gameObject.GetComponent<InventoryItem>().item;
-            Item ItemGenerate = new Item(data);
-            inventory.AddItem(ItemGenerate,1);
+            Item itemGenerated = new Item(data);
+            inventory.AddItem(itemGenerated, 1);
             Destroy(collision.gameObject);
-
         }
     }
 
     private void OnApplicationQuit()
     {
-        inventory.Container.Items = new InventorySlot[9];
-
-        // Initialize each InventorySlot object before accessing its properties
-        for (int i = 0; i < inventory.Container.Items.Length; i++)
-        {
-            inventory.Container.Items[i] = new InventorySlot();
-            inventory.Container.Items[i].item = new Item(); // Assuming Item is a class with a public constructor
-            //inventory.Container.Items[i].item.Name = "ch" + i;
-        }
+        // No need to reinitialize the PowerUpItems array here.
+        // It will be automatically initialized when the game starts.
     }
 }
