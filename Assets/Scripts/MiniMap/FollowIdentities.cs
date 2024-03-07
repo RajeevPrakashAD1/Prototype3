@@ -11,10 +11,10 @@ public class MiniMapPlayer : MonoBehaviour
         if (followTransform)
         {
             // Set the position of the mini-map icon to match the player's position
-            transform.position = new Vector3(followTransform.position.x ,20f , followTransform.position.z);
+            transform.position = new Vector3(followTransform.position.x ,followTransform.position.y+40f , followTransform.position.z);
 
             // Set the rotation of the mini-map icon to match the player's rotation
-            transform.rotation = Quaternion.Euler(0f, followTransform.eulerAngles.y, 0f);
+            //transform.rotation = Quaternion.Euler(0f, followTransform.eulerAngles.y, 0f);
         }
     }
 }

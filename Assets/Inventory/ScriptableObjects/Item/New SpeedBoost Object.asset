@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New SpeedBoost Object
   m_EditorClassIdentifier: 
   Id: 6
-  img: {fileID: 96824482, guid: 2813269bce1a98645b10365288c90bba, type: 3}
+  img: {fileID: 21300000, guid: 380c2bd5b1b93f145a2c5c932105adfb, type: 3}
   type: 2
   description: 
-  Speedmultiplier: 2
+  Speedmultiplier: 1.5

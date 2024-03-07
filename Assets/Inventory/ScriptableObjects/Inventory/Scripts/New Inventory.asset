@@ -17,47 +17,32 @@ MonoBehaviour:
     Items:
     - ID: -1
       item:
-        Name: ch10
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
     - ID: -1
       item:
-        Name: ch11
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
     - ID: -1
       item:
-        Name: ch12
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
     - ID: -1
       item:
-        Name: ch13
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
     - ID: -1
       item:
-        Name: ch14
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
     - ID: -1
       item:
-        Name: ch15
-        Id: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: ch16
-        Id: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: ch17
-        Id: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: ch18
-        Id: -1
+        Name: 
+        Id: 0
       amount: 0
   savePath: /inventory.save

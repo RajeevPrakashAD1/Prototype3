@@ -33,13 +33,16 @@ public class EnemyBullet : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         // Check if the bullet has collided with the player
-        //Debug.Log("enemy bullet collided" + collision.gameObject.name);
+       // Debug.Log("enemy bullet collided" + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             //hasHitPlayer = true;
             GameManager.Instance.DamagePlayer(20);
             Destroy(gameObject);
 
+        }else if (collision.gameObject.CompareTag("PlayerProtection"))
+        {
+            Destroy(gameObject);
         }
         
         

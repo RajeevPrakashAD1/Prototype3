@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject shootPoint;
     [SerializeField]
     private GameObject bulletParent;
+    [SerializeField]
+    private float rotationSpeed = 1f;
    
 
     private InputAction moveAction;
@@ -62,9 +64,9 @@ public class PlayerMovement : MonoBehaviour
   
     void Update()
     {
-       
 
-        Vector2 movementInput = moveAction.ReadValue<Vector2>();
+        playerSpeed = GameManager.Instance.PlayerSpeed;
+        /*Vector2 movementInput = moveAction.ReadValue<Vector2>();
         playerSpeed = GameManager.Instance.PlayerSpeed;
 
 
@@ -75,7 +77,24 @@ public class PlayerMovement : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
+        }*/
+        Vector2 movementInput = moveAction.ReadValue<Vector2>();
+
+        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
+
+
+        move = move.x * mainCamera.right.normalized + move.z * mainCamera.forward.normalized;
+        move.y = 0;
+        controller.Move(move * Time.deltaTime * playerSpeed);
+
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
         }
+        float targetAngle = mainCamera.eulerAngles.y;
+        Quaternion Targetrotation = Quaternion.Euler(0, targetAngle, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Targetrotation, rotationSpeed * Time.deltaTime);
+            
         //Debug.Log("trying to hit");
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, terrainLayerMask))

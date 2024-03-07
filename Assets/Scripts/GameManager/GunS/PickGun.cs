@@ -17,7 +17,7 @@ public class PickGun : MonoBehaviour
         PickGunButton = GameObject.Find("PickGun");
         if(PickGunButton != null)
         {
-            //Debug.Log("Pickgun is not  null");
+            Debug.Log("Pickgun is not  null");
             PickGunButton.SetActive(false);
         }
         Player = GameObject.FindWithTag("Player");
@@ -46,11 +46,12 @@ public class PickGun : MonoBehaviour
 
     public void EquipGun()
     {
-        Debug.Log("equipping");
+       
         gm.currentWeapon = gm.collidedWeapon;
         ChangeGun(gm.currentWeapon);
         gm.currentWeapon.SetActive(false);
         gm.currentWeapon = NewGun;
+        Debug.Log("equipping setting false");
         PickGunButton.SetActive(false);
        
     }
@@ -59,11 +60,11 @@ public class PickGun : MonoBehaviour
     {
         // Find the child object with the "Gun" tag
         Transform oldGunTransform = null;
-        Debug.Log("player" + Player);
-        if(Player != null) Debug.Log("player not null");
+        //Debug.Log("player" + Player);
+       // if(Player != null) Debug.Log("player not null");
         if (Player && Player.transform && Player.transform.childCount > 1)
         {
-            oldGunTransform = Player.transform.GetChild(1);
+            oldGunTransform = Player.transform.GetChild(2);
         }
        
 
@@ -80,7 +81,7 @@ public class PickGun : MonoBehaviour
 
             // Create a new gun object and set its position and rotation
             GameObject instantiatedNewGun = Instantiate(newGun, oldGunPosition, oldGunRotation, Player.transform);
-            instantiatedNewGun.tag = "Gun";
+            instantiatedNewGun.tag = "PlayerGun";
             instantiatedNewGun.layer = 12;
             GunMain gunMain = instantiatedNewGun.GetComponent<GunMain>();
             gunMain.equipped = true;

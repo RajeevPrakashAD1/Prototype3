@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfBigEnemies: 2
   numberOfSmallEnemies: 150
-  bigEnemySpeed: 1
-  smallEnemySpeed: 3.5
+  bigEnemySpeed: 2
+  smallEnemySpeed: 5
   bigEnemyFireRate: 5
-  smallEnemyFireRate: 5
-  smallEnemyDamage: 5
+  smallEnemyFireRate: 8
+  smallEnemyDamage: 8
   bigEnemyDamage: 5

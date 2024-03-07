@@ -7,8 +7,8 @@ public class BulletCtrl : MonoBehaviour
     [SerializeField]
     private GameObject bulletDecal;
 
-    private float speed = 170f;
-    private float timeToDestory = 1f;
+    private float speed = 200f;
+    private float timeToDestory = 100f;
     public Vector3 target { get; set; }
     public bool hit { get; set; }
     public float damage { get; set; }
@@ -19,10 +19,11 @@ public class BulletCtrl : MonoBehaviour
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        if (!hit && Vector3.Distance(transform.position, target) < 0.1f)
+        if ( Vector3.Distance(transform.position, target) < 0.1f)
         {
            Destroy(gameObject);
         }
+        //Debug.Log(transform.position + " " + target);
     }
     private void Start()
     {
@@ -32,7 +33,8 @@ public class BulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        //Debug.Log("Collided with: " + collision.gameObject.tag);
+        Debug.Log("Collided with: " + collision.gameObject.tag , collision.gameObject);
+
 
         // Destroy the bullet and the collided object
         if (collision.gameObject.tag == "Enemy")

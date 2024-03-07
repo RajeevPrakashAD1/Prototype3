@@ -44,6 +44,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+       // Debug.Log(gameObject.name + "  collided with " + collision.gameObject.tag);
         if(collision.gameObject.tag == "Player")
         {
           

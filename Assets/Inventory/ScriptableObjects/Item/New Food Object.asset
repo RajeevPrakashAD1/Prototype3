@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Food Object
   m_EditorClassIdentifier: 
   Id: 2
-  img: {fileID: -1247134969, guid: 2813269bce1a98645b10365288c90bba, type: 3}
+  img: {fileID: 21300000, guid: 97fb2a0f865c20f48bead429b71a6a8c, type: 3}
   type: 1
   description: 
   energy: 350

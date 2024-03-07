@@ -17,10 +17,10 @@ public class PowerUpSpawner : MonoBehaviour
     IEnumerator SpawnItems()
     {
         NavMeshHit hit;
-        Debug.Log("lengtyh" + itemPrefabs.Length);
+        //Debug.Log("lengtyh" + itemPrefabs.Length);
         for (int i = 0; i < itemPrefabs.Length; i++)
         {
-            Debug.Log("spawning.....3");
+           // Debug.Log("spawning.....3");
             for (int j = 0; j < itemsToSpawn; j++)
             {
 
@@ -28,7 +28,7 @@ public class PowerUpSpawner : MonoBehaviour
                 //Debug.Log("spawning.....2" + randomPoint);
                 if (GetRandomNavMeshPosition(out randomPoint))
                 {
-                    Debug.Log("spawning.....");
+                    //Debug.Log("spawning.....");
 
                     GameObject item = Instantiate(itemPrefabs[i], randomPoint, Quaternion.identity, transform);
 

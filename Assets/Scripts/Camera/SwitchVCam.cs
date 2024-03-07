@@ -48,9 +48,12 @@ public class SwitchVAam : MonoBehaviour
     }
     private void CancelAim()
     {
-        NormalCanvas.enabled = true;
+        Debug.Log("cancel Aim");
         ZoomCanvas.enabled = false;
+        NormalCanvas.enabled = true;
+        
         virtualCamera.Priority -= 10;
+
     }
 
 }

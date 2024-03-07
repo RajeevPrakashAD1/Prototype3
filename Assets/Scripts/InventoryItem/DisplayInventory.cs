@@ -11,6 +11,7 @@ public class DisplayInventory : MonoBehaviour
 
     public MouseItem mouseItem = new MouseItem();
     public GameObject inventoryPrefab;
+    public GameObject GunSlot;
     public GameObject InventoryPanel;
     public InventoryObject inventory;
     public int X_START;
@@ -98,7 +99,9 @@ public class DisplayInventory : MonoBehaviour
     }
     public Vector3 GetPosition(int i)
     {
-        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
+        float pos = (X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)));
+        Debug.Log("position " + pos);
+        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)) +400, Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
 
     private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)

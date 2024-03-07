@@ -65,13 +65,17 @@ public class GunMain : MonoBehaviour
     {
         GameObject reloadTextObject = GameObject.FindWithTag("ReloadingText");
 
+
         // Check if the GameObject is found
         if (reloadTextObject != null)
         {
             // Get the Text component from the GameObject
             reloadText = reloadTextObject.GetComponent<Text>();
         }
-       }
+
+        
+
+    }
     private void Update()
     {
         
@@ -95,17 +99,28 @@ public class GunMain : MonoBehaviour
 
                 // Set bullet damage
                 bulletCtrl.damage = gunData.damage;
+                // Define layers to exclude
+                int layer1 = LayerMask.NameToLayer("Player");
+                int layer2 = LayerMask.NameToLayer("PlayerProtection");
+                int layer3 = LayerMask.NameToLayer("PlayerGun");
+
+                // Combine layers using bitwise OR operations
+                int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3);
+
+                // Invert the combined mask to exclude specified layers
+                int layerMask = ~excludedLayers;
 
                 RaycastHit hit;
-                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, Mathf.Infinity))
+                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 200f,layerMask))
                 {
+                    Debug.Log("hit : " + hit.collider.gameObject +" "+ hit.distance);
                     bulletCtrl.target = hit.point;
-                    bulletCtrl.hit = true;
+                    //bulletCtrl.hit = true;
                 }
                 else
                 {
                     bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
-                    bulletCtrl.hit = false;
+                   // bulletCtrl.hit = false;
                 }
 
                 // Reduce ammo count

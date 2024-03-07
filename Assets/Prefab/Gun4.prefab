@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 7605136136086729649}
   - component: {fileID: 8644372596745195060}
   - component: {fileID: -5977510912270630251}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: Gun4
   m_TagString: Gun
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 65.71, y: 10.837999, z: 109.338}
-  m_LocalScale: {x: 0.13, y: -0.07, z: 1.17}
+  m_LocalScale: {x: 0.13, y: 0.07, z: 1.17}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1123871711020095168}
@@ -209,6 +209,8 @@ MonoBehaviour:
   shootPoint: {fileID: 700231310757386767}
   bulletPrefab: {fileID: 9218819817203254772, guid: fbc65607f3bd0f849909a00df5557f91, type: 3}
   bulletParent: {fileID: 3466806022381462294, guid: 153d4a2d3eaef0e4cbbd6009c20e547a, type: 3}
+  equipped: 0
+  reloadText: {fileID: 0}
 --- !u!143 &7605136136086729649
 CharacterController:
   m_ObjectHideFlags: 0

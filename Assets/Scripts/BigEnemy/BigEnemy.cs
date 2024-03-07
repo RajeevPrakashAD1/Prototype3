@@ -9,8 +9,8 @@ public class BigEnemy : MonoBehaviour
     public LevelProgression levelProg;
     public void Start()
     {
-        slider.maxValue = 50f;
-        slider.value = 50f;
+        slider.maxValue = 1000f;
+        slider.value = 1000f;
     }
 
     public void Update()
@@ -26,6 +26,7 @@ public class BigEnemy : MonoBehaviour
     {
         //Debug.Log("setting health");
         slider.value -= bulletDamage;
+
     }
     /*private void OnCollisionEnter(Collision collision)
     {
@@ -44,7 +45,14 @@ public class BigEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             Debug.Log("calling collisin");
-            SetHealth(20);
+            SetHealth(40);
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Player")
+        {
+            GameManager.Instance.DamagePlayer(10000);
         }
     }
 }

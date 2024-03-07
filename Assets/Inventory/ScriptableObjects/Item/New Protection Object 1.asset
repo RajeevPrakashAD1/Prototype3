@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Protection Object 1
   m_EditorClassIdentifier: 
   Id: 3
-  img: {fileID: -1114779503, guid: 2813269bce1a98645b10365288c90bba, type: 3}
+  img: {fileID: 21300000, guid: 9e2174f589fda9d44b7876df423b6e61, type: 3}
   type: 3
   description: 
   protectionTime: 15

@@ -6,12 +6,14 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     // Player health
-    private int playerHealth = 9900;
+    
+    public int playerHealth = 9900;
     public HealthBar healthBar;
     public GameObject player;
+    public GameObject InstPrompt;
     public LevelData levelData;
-    private float playerSpeed = 12f;
-    
+    private float playerSpeed = 8f;
+    public int currentLevel = 1;
 
     // Current weapon
     public GameObject currentWeapon;
@@ -54,12 +56,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         //levelData = GameManager.instance.levelData;
+        Application.targetFrameRate = 60;
         
     }
    
     public void Reset()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        
         if (player == null)
         {
             //Debug.Log("didnt get playere");
@@ -106,9 +110,13 @@ public class GameManager : MonoBehaviour
         set { collidedWeapon = value; }
     }
 
+    public int CurrentLevel
+    {
+        get { return currentLevel; }
+        set { currentLevel = value; }
+    }
 
 
-  
     // Example method to damage the player
     public void DamagePlayer(int damageAmount)
     {

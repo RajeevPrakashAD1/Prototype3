@@ -20,6 +20,8 @@ TagManager:
   - PickGunButton
   - NextLevelButton
   - Inventory Item
+  - PlayerProtection
+  - PlayerGun
   layers:
   - Default
   - TransparentFX

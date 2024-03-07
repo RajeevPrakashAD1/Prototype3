@@ -51,6 +51,7 @@ public class LevelProgression : MonoBehaviour
     {
         
         Time.timeScale = 1f;
-        SceneManager.LoadScene(2);
+        GameManager.Instance.CurrentLevel += 1;
+        SceneManager.LoadScene(GameManager.Instance.CurrentLevel);
     }
 }
