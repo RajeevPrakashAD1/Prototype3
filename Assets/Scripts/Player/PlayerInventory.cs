@@ -10,10 +10,15 @@ public class PlayerInventory : MonoBehaviour
     {
         if (collision.transform.CompareTag("Inventory Item"))
         {
-            ItemObject data = collision.gameObject.GetComponent<InventoryItem>().item;
-            Item itemGenerated = new Item(data);
-            inventory.AddItem(itemGenerated, 1);
-            Destroy(collision.gameObject);
+
+            InventoryItem data = collision.gameObject.GetComponent<InventoryItem>();
+            if(data.type == "PowerUp")
+            {
+                Item itemGenerated = new Item(data.PowerUpitem);
+                inventory.AddItem(itemGenerated, 1);
+                Destroy(collision.gameObject);
+            }
+            
         }
     }
 

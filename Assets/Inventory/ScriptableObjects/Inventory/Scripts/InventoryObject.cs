@@ -64,6 +64,7 @@ public abstract class InventoryObject<T> : ScriptableObject where T : InventoryS
             }
         }
     }
+    
 }
 
 
@@ -77,7 +78,7 @@ public class PowerUpInventory : InventoryObject<InventorySlot>
 
 
 [CreateAssetMenu(fileName = "New Gun Inventory", menuName = "Inventory System/Gun Inventory")]
-public class GunInventory : InventoryObject<InventoryGunSlot>
+public class GunInventory : InventoryObject<InventorySlot>
 {
     // Add any specific methods or properties for gun inventory here
 }
@@ -86,7 +87,7 @@ public class GunInventory : InventoryObject<InventoryGunSlot>
 
 
 [CreateAssetMenu(fileName = "New Bullet Inventory", menuName = "Inventory System/Bullet Inventory")]
-public class BulletInventory : InventoryObject<InventoryBulletSlot>
+public class BulletInventory : InventoryObject<InventorySlot>
 {
     // Add any specific methods or properties for bullet inventory here
 }
@@ -203,7 +204,32 @@ public class InventoryBulletSlot : InventorySlot
 
 
 
+[System.Serializable]
+public class Item
+{
+    public string Name;
+    public int Id;
+    public Item(PowerupItemObject item)
+    {
+        if (item.name != null) Name = item.name;
+        Id = item.Id;
+    }
+    public Item(GunItemObject item)
+    {
+        Name = "Gun";
+        Id = item.Id;
+    }
 
+    public Item(int i)
+    {
+        Name = "";
+        Id = i;
+    }
+    public Item()
+    {
+
+    }
+}
 
 
 

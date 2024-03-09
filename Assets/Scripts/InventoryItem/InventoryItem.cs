@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class InventoryItem : MonoBehaviour
 {
-    public ItemObject item;
+    public string type;
+    public PowerupItemObject PowerUpitem;
+    public GunItemObject GunItem;
 }

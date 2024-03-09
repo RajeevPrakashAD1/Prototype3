@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Protection Object", menuName = "Inventory System/Item/Protection")]
-public class ProtectionObjects : ItemObject
+public class ProtectionObjects : PowerupItemObject
 {
     // Start is called before the first frame update
     public float protectionTime;

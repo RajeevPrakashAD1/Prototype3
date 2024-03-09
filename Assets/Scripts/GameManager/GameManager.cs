@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviour
     public void Reset()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        
+        InventoryInitializer ii = GameObject.FindGameObjectWithTag("InventoryItemDisplay").GetComponent<InventoryInitializer>();
+       /* ii.InitializeInventories();*/
+
+
         if (player == null)
         {
             //Debug.Log("didnt get playere");

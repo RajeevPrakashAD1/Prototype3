@@ -7,25 +7,31 @@ using UnityEngine;
 public class ItemDatabaseObject : ScriptableObject
 {
     // Start is called before the first frame update
-    public ItemObject[] Items;
+    public PowerupItemObject[] PowerUpItems;
+    public GunItemObject[] GunItems;
     //public InventoryObject inventory;
     
-    public Dictionary<int,ItemObject> GetItem = new Dictionary<int,ItemObject>();
+    public Dictionary<int,PowerupItemObject> GetItemPowerUp = new Dictionary<int,PowerupItemObject>();
+    public Dictionary<int, GunItemObject> GetItemGun = new Dictionary<int, GunItemObject>();
 
     public void OnEnable()
     {
-        Debug.Log("database called "+Items.Length);
+        //Debug.Log("database called "+PowerUpItems.Length);
       
       
-        for(int i = 0; i < Items.Length; i++)
+        for(int i = 0; i < PowerUpItems.Length; i++)
         {
             //Debug.Log("item name", Item[i].Name);
             //Items[i].Id = i;
             //Items[i].name = "something";
             //Debug.Log(Items[i].Id + "  " + Items[i].type);
-            GetItem.Add(Items[i].Id, Items[i]);
+            GetItemPowerUp.Add(PowerUpItems[i].Id, PowerUpItems[i]);
             //inventory.AddItem(new Item(Items[i]),1);
             
+        }
+        for(int i = 0; i < GunItems.Length; i++)
+        {
+            GetItemGun.Add(GunItems[i].Id, GunItems[i]);
         }
     }
 

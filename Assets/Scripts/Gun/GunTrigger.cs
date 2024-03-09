@@ -13,6 +13,7 @@ public class GunTrigger : MonoBehaviour
         {
             // Enable the button on the canvas
             canvasButton.SetActive(true);
+            
             gameManager.collidedWeapon = other.gameObject;
         }
     }
@@ -27,5 +28,5 @@ public class GunTrigger : MonoBehaviour
         }
     }
 
-    
+
 }

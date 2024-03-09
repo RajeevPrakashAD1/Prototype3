@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class GunMain : MonoBehaviour
 {
+   
     public GunData gunData;
-
     private PlayerInput playerInput;
     private InputAction shootAction;
     private InputAction reloadAction;
@@ -28,6 +28,7 @@ public class GunMain : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
         if (playerInput != null)
         {
             shootAction = playerInput.actions["Shoot"];
@@ -38,7 +39,10 @@ public class GunMain : MonoBehaviour
         {
             Debug.LogWarning("PlayerInput component not found.");
         }
-
+        if (gunData == null)
+        {
+            gunData = GetComponent<InventoryItem>().GunItem.gundata;
+        }
         mainCamera = Camera.main.transform;
 
         // Initialize ammo values based on gun data
@@ -48,6 +52,7 @@ public class GunMain : MonoBehaviour
        // Debug.Log("maxammo " + maxAmmo + " " + currentAmmo);
        
         reloadTime = gunData.reloadTime;
+        
     }
 
     private void OnEnable()
@@ -113,13 +118,13 @@ public class GunMain : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 200f,layerMask))
                 {
-                    Debug.Log("hit : " + hit.collider.gameObject +" "+ hit.distance);
+                    Debug.Log("hit : " + hit.collider.gameObject +" "+ hit.point);
                     bulletCtrl.target = hit.point;
                     //bulletCtrl.hit = true;
                 }
                 else
                 {
-                    bulletCtrl.target = mainCamera.position + mainCamera.forward * 25f;
+                    bulletCtrl.target = mainCamera.position + mainCamera.forward * 55f;
                    // bulletCtrl.hit = false;
                 }
 

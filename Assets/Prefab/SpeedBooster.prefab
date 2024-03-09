@@ -146,4 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bf113d8ac0c984fb058131c6f2c60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 94c3fdea9ddc2c54c9c304e51e536058, type: 2}
+  type: PowerUp
+  PowerUpitem: {fileID: 11400000, guid: 94c3fdea9ddc2c54c9c304e51e536058, type: 2}
+  GunItem: {fileID: 0}

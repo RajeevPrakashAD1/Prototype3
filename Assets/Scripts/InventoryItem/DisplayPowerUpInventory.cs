@@ -62,7 +62,8 @@ public class DisplayPowerUpInventory : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in PowerUpitemsDisplayed)
         {
-            //Debug.Log(_slot.Key + "   " + _slot.Value.ID + " "+ _slot.Value.item.Name);
+            Debug.Log(_slot.Value);
+            Debug.Log(_slot.Value + "   " + _slot.Value.ID + " ");
 
             if (_slot.Value.ID >= 0)
 
@@ -88,7 +89,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
                 }
                 Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
 
-                _slot.Key.transform.GetComponent<Image>().sprite = database.GetItem[_slot.Value.item.Id].img;
+                _slot.Key.transform.GetComponent<Image>().sprite = database.GetItemPowerUp[_slot.Value.item.Id].img;
                 _slot.Key.transform.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
 
@@ -124,7 +125,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
         if (PowerUpitemsDisplayed.ContainsKey(obj) && PowerUpitemsDisplayed[obj].ID >= 1)
         {
             // Handle the click event for the item
-            ItemObject clickItem = database.GetItem[PowerUpitemsDisplayed[obj].ID];
+            PowerupItemObject clickItem = database.GetItemPowerUp[PowerUpitemsDisplayed[obj].ID];
             string type = clickItem.type.ToString();
             if (type == "Food")
             {
@@ -173,7 +174,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
 
             var img = mouseObject.AddComponent<Image>();
             // Debug.Log("get insied"+ itemsDisplayed[obj].ID +"...."+ inventory.database.GetItem[itemsDisplayed[obj].ID].img);
-            img.sprite = database.GetItem[PowerUpitemsDisplayed[obj].ID].img;
+            img.sprite = database.GetItemPowerUp[PowerUpitemsDisplayed[obj].ID].img;
             img.raycastTarget = false;
         }
         mouseItem.obj = mouseObject;

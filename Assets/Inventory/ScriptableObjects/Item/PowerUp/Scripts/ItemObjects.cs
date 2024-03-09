@@ -10,7 +10,7 @@ public enum ItemType
     SpeedBooster,
     Protection
 }
-public abstract class ItemObject : ScriptableObject
+public abstract class PowerupItemObject : ScriptableObject
 {
     public int Id;
     public Sprite img;
@@ -18,23 +18,3 @@ public abstract class ItemObject : ScriptableObject
     public string description;
 }
 
-[System.Serializable]
-public class Item
-{
-    public string Name;
-    public int Id;
-    public Item(ItemObject item)
-    {
-        if(item.name != null) Name = item.name;
-        Id = item.Id;
-    }
-    public Item(int i)
-    {
-        Name = "ch1" + i.ToString();
-        Id = -1;
-    }
-    public Item()
-    {
-
-    }
-}

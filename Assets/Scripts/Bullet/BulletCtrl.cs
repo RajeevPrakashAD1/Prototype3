@@ -18,12 +18,16 @@ public class BulletCtrl : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        if ( Vector3.Distance(transform.position, target) < 0.1f)
+        Vector3 direction = (target - transform.position).normalized;
+        Vector3 newTarget = target + direction * 0.3f;
+        transform.position = Vector3.MoveTowards(transform.position, newTarget, speed * Time.deltaTime);
+        Debug.Log(transform.position + " " + target);
+        if (Vector3.Distance(transform.position, newTarget) <= 0.1f)
         {
-           Destroy(gameObject);
+            //Destroy(gameObject);
+            Debug.Log("reached pos");
         }
-        //Debug.Log(transform.position + " " + target);
+
     }
     private void Start()
     {
@@ -42,10 +46,19 @@ public class BulletCtrl : MonoBehaviour
             Destroy(gameObject);
             Destroy(collision.gameObject);
         }
-        else
+        
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided with rigid: " + collision.gameObject.tag, collision.gameObject);
+
+
+        // Destroy the bullet and the collided object
+        if (collision.gameObject.tag == "Enemy")
         {
             Destroy(gameObject);
-            //Destroy(collision.gameObject);
+            Destroy(collision.gameObject);
         }
 
     }

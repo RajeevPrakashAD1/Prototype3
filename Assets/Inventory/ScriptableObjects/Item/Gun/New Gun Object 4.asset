@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3d7e80b12e60f42822046ff4d5ab58, type: 3}
+  m_Name: New Gun Object 4
+  m_EditorClassIdentifier: 
+  Id: 4
+  model: {fileID: 3890080485444380978, guid: 1a7cd173043ba7f4b843205f6b829dd5, type: 3}
+  gundata: {fileID: 11400000, guid: a94355367ac43874c9f81542fb9a8f2a, type: 2}
+  description: 

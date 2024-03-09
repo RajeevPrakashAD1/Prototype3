@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7091807132012802402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0100355875, y: 0.049999785, z: 0.4246117}
+  m_LocalPosition: {x: 0.0100355875, y: 0.049999785, z: 0.414}
   m_LocalScale: {x: 1.2, y: 1.2000002, z: 0.14950998}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7091807132012802402}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -120,9 +120,10 @@ GameObject:
   - component: {fileID: 632354074241518915}
   - component: {fileID: 56735358699721847}
   - component: {fileID: 7124880899581191125}
+  - component: {fileID: 4698492756564873864}
   m_Layer: 3
   m_Name: Gun1
-  m_TagString: PlayerGun
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +159,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8071671950725752172}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8071671950725752172}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d654116492081d74bb35e75c42517072, type: 3}
   m_Name: 
@@ -228,7 +229,7 @@ CharacterController:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
@@ -244,7 +245,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8071671950725752172}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -284,7 +285,22 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 4.8079567, y: 6.062362, z: 1.37739}
   m_Center: {x: 0.8183553, y: -2.5311806, z: -0.12037028}
+--- !u!114 &4698492756564873864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8071671950725752172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bf113d8ac0c984fb058131c6f2c60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: Gun
+  PowerUpitem: {fileID: 0}
+  GunItem: {fileID: 11400000, guid: d6eb311c5905a0f40be82f72889d9a36, type: 2}

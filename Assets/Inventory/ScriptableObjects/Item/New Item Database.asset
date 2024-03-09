@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6531ffb0ded38409190794be817f16, type: 3}
   m_Name: New Item Database
   m_EditorClassIdentifier: 
-  Items:
+  PowerUpItems:
   - {fileID: 11400000, guid: dc0b4bcee3a814b4f834413a7669b9f5, type: 2}
   - {fileID: 11400000, guid: f5c4b71ac0ecca247b3ce72088b688ff, type: 2}
   - {fileID: 11400000, guid: 9cde50acda7529c4d952e44226c536f3, type: 2}
   - {fileID: 11400000, guid: 6645ea95227d5bb4dbf5fc409d30201a, type: 2}
-  - {fileID: 11400000, guid: 94c3fdea9ddc2c54c9c304e51e536058, type: 2}
   - {fileID: 11400000, guid: 8124c6ba81a5b534d8f06b53c3dcfa2f, type: 2}
+  - {fileID: 11400000, guid: 94c3fdea9ddc2c54c9c304e51e536058, type: 2}
+  GunItems:
+  - {fileID: 11400000, guid: d6eb311c5905a0f40be82f72889d9a36, type: 2}
+  - {fileID: 11400000, guid: e5f4e6f4a604c184bb0997174d80e96b, type: 2}
+  - {fileID: 11400000, guid: 1011f8215a3a1cb4a8757555b29b0473, type: 2}
+  - {fileID: 11400000, guid: 7e07917241b6a3e4db7a06202512acc1, type: 2}
