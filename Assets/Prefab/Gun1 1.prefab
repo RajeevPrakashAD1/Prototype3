@@ -206,10 +206,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 4ecc3128089fac04ab6c2226437dca6f, type: 2}
+  inventory: {fileID: 0}
   shootPoint: {fileID: 7091807132012802402}
-  bulletPrefab: {fileID: 9218819817203254772, guid: fbc65607f3bd0f849909a00df5557f91, type: 3}
-  bulletParent: {fileID: 3466806022381462294, guid: 153d4a2d3eaef0e4cbbd6009c20e547a, type: 3}
-  equipped: 0
+  bulletPrefab: {fileID: 0}
+  bulletHoldingId: -1
+  bmng: {fileID: -8422067656959239041, guid: 153d4a2d3eaef0e4cbbd6009c20e547a, type: 3}
+  equipped: 1
   reloadText: {fileID: 0}
 --- !u!143 &632354074241518915
 CharacterController:

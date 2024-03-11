@@ -9,4 +9,5 @@ public class InventoryItem : MonoBehaviour
     public string type;
     public PowerupItemObject PowerUpitem;
     public GunItemObject GunItem;
+    public BulletItemObject BulletItem;
 }

@@ -9,10 +9,12 @@ public class ItemDatabaseObject : ScriptableObject
     // Start is called before the first frame update
     public PowerupItemObject[] PowerUpItems;
     public GunItemObject[] GunItems;
+    public BulletItemObject[] BulletItems;
     //public InventoryObject inventory;
     
     public Dictionary<int,PowerupItemObject> GetItemPowerUp = new Dictionary<int,PowerupItemObject>();
     public Dictionary<int, GunItemObject> GetItemGun = new Dictionary<int, GunItemObject>();
+    public Dictionary<int, BulletItemObject> GetItemBullet = new Dictionary<int, BulletItemObject>();
 
     public void OnEnable()
     {
@@ -32,6 +34,10 @@ public class ItemDatabaseObject : ScriptableObject
         for(int i = 0; i < GunItems.Length; i++)
         {
             GetItemGun.Add(GunItems[i].Id, GunItems[i]);
+        }
+        for (int i = 0; i < BulletItems.Length; i++)
+        {
+            GetItemBullet.Add(BulletItems[i].Id, BulletItems[i]);
         }
     }
 

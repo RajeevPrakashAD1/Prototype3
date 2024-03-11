@@ -207,9 +207,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: a94355367ac43874c9f81542fb9a8f2a, type: 2}
+  inventory: {fileID: 0}
   shootPoint: {fileID: 700231310757386767}
-  bulletPrefab: {fileID: 9218819817203254772, guid: fbc65607f3bd0f849909a00df5557f91, type: 3}
-  bulletParent: {fileID: 3466806022381462294, guid: 153d4a2d3eaef0e4cbbd6009c20e547a, type: 3}
+  bulletPrefab: {fileID: 0}
+  bulletHoldingId: 0
+  bmng: {fileID: -8422067656959239041, guid: 153d4a2d3eaef0e4cbbd6009c20e547a, type: 3}
   equipped: 0
   reloadText: {fileID: 0}
 --- !u!143 &7605136136086729649
@@ -287,8 +289,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.7429767, y: 4.8660574, z: 1.432572}
-  m_Center: {x: 0.6923382, y: -1.9330286, z: 0.012151553}
+  m_Size: {x: 18.349926, y: 20.42379, z: 2.5668797}
+  m_Center: {x: -1.7438742, y: 5.8458414, z: -0.23410453}
 --- !u!114 &-8598514382096714606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,3 +306,4 @@ MonoBehaviour:
   type: Gun
   PowerUpitem: {fileID: 0}
   GunItem: {fileID: 11400000, guid: 7e07917241b6a3e4db7a06202512acc1, type: 2}
+  BulletItem: {fileID: 0}

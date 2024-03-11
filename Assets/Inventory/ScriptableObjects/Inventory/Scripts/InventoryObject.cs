@@ -219,6 +219,11 @@ public class Item
         Name = "Gun";
         Id = item.Id;
     }
+    public Item(BulletItemObject item)
+    {
+        Name = "Bullet";
+        Id = item.Id;
+    }
 
     public Item(int i)
     {

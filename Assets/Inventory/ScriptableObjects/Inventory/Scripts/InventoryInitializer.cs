@@ -4,6 +4,7 @@ public class InventoryInitializer : MonoBehaviour
 {
     public PowerUpInventory powerUpInventoryPrefab; // Assign in the inspector
     public GunInventory gunInventoryPrefab; // Assign in the inspector
+    public BulletInventory bulletInventoryPrefab; // Assign in the inspector
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class InventoryInitializer : MonoBehaviour
     {
         powerUpInventoryPrefab.Items = new InventorySlot[6];
         gunInventoryPrefab.Items = new InventorySlot[4];
+        bulletInventoryPrefab.Items = new InventorySlot[4];
     }
 
 }

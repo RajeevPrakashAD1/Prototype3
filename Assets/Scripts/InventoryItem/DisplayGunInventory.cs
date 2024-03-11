@@ -22,7 +22,8 @@ public class DisplayGunInventory : MonoBehaviour
     public int Y_SPACE_BETWEEN_ITEMS;
     public EquipPowerUp equip;
     Dictionary<GameObject, InventorySlot> GunItemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-
+    private bool gunEquipped;
+    public GameObject newGunEquipped;
 
     void Start()
     {
@@ -38,7 +39,7 @@ public class DisplayGunInventory : MonoBehaviour
     public void CreateSlots()
     {
         GunItemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-        Debug.Log("gun inventory length++" + inventory.Items.Length);
+       // Debug.Log("gun inventory length++" + inventory.Items.Length);
         for (int i = 0; i < inventory.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPowerUpPrefab, Vector3.zero, Quaternion.identity, transform);
@@ -85,9 +86,9 @@ public class DisplayGunInventory : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("chil not nll");
+                    //Debug.Log("chil not nll");
                 }
-                Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
+                //Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
 
                 _slot.Key.transform.GetComponent<Image>().sprite = database.GetItemGun[_slot.Value.item.Id].gundata.img;
                 _slot.Key.transform.GetComponent<Image>().color = new Color(1, 1, 1, 1);
@@ -106,7 +107,7 @@ public class DisplayGunInventory : MonoBehaviour
     public Vector3 GetPowerUpSlotPosition(int i)
     {
         float pos = (X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)));
-        Debug.Log("position " + pos);
+        //Debug.Log("position " + pos);
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)) - 800, Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
 
@@ -118,20 +119,25 @@ public class DisplayGunInventory : MonoBehaviour
         eventTrigger.callback.AddListener(action);
         trigger.triggers.Add(eventTrigger);
     }
-
+    //jo@rentomojo.com
 
     public void OnClick(GameObject obj)
     {
-
+        Debug.Log("onclick");
+        if (!GunItemsDisplayed.ContainsKey(obj) || GunItemsDisplayed[obj].ID < 0)
+        {
+            return;
+        }
         void ChangeGun(GameObject newGun)
         {
             // Find the child object with the "Gun" tag
             Transform oldGunTransform = null;
+            
             //Debug.Log("player" + Player);
             // if(Player != null) Debug.Log("player not null");
-            if (Player && Player.transform && Player.transform.childCount > 1)
+            if (Player && Player.transform && Player.transform.childCount >= 1)
             {
-                oldGunTransform = Player.transform.GetChild(Player.transform.childCount - 1);
+                oldGunTransform = Player.transform.GetChild(0);
             }
 
 
@@ -144,15 +150,22 @@ public class DisplayGunInventory : MonoBehaviour
 
                 // Destroy the old gun
                 // Debug.Log("destroying old gun");
-                Destroy(oldGunTransform.gameObject);
+                if(Player.transform.childCount > 3)
+                {
+                    Destroy(Player.transform.GetChild(3).gameObject);
+                }
 
                 // Create a new gun object and set its position and rotation
                 GameObject instantiatedNewGun = Instantiate(newGun, oldGunPosition, oldGunRotation, Player.transform);
                 instantiatedNewGun.tag = "PlayerGun";
                 instantiatedNewGun.layer = 12;
                 GunMain gunMain = instantiatedNewGun.GetComponent<GunMain>();
+               
+                
+
+
                 gunMain.equipped = true;
-                newGun = instantiatedNewGun;
+                newGunEquipped = instantiatedNewGun;
 
             }
             else
@@ -167,7 +180,8 @@ public class DisplayGunInventory : MonoBehaviour
 
         GameObject gunn = database.GetItemGun[GunItemsDisplayed[obj].ID].model;
        ChangeGun(gunn);
-        ShowTickButton(obj.transform.position);
+       ShowTickButton(obj.transform.position);
+        gunEquipped = true;
     }
     public void OnEnter(GameObject obj)
     {
@@ -205,10 +219,21 @@ public class DisplayGunInventory : MonoBehaviour
         if (mouseItem.hoverObj)
         {
             inventory.MoveItem(GunItemsDisplayed[obj], GunItemsDisplayed[mouseItem.hoverObj]);
+            if(gunEquipped) ShowTickButton(mouseItem.hoverObj.transform.position);
+
         }
         else
         {
+            Debug.Log("aya isme");
             inventory.RemoveItem(GunItemsDisplayed[obj].item);
+            DestroyTickButton();
+            Destroy(newGunEquipped);
+           /* GunMain gunMain = newGunEquipped.GetComponent<GunMain>();
+            MeshRenderer mr = newGunEquipped.GetComponent<MeshRenderer>();
+            gunMain.enabled = false;
+            mr.enabled = false;*/
+
+
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;

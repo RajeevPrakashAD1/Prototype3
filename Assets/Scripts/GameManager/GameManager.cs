@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject currentWeapon;
     //collided weapon
     public GameObject collidedWeapon;
-
+    public Transform gunPos;
     // Public property to access the singleton instance
     public static GameManager Instance
     {

@@ -24,3 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5f4e6f4a604c184bb0997174d80e96b, type: 2}
   - {fileID: 11400000, guid: 1011f8215a3a1cb4a8757555b29b0473, type: 2}
   - {fileID: 11400000, guid: 7e07917241b6a3e4db7a06202512acc1, type: 2}
+  BulletItems:
+  - {fileID: 11400000, guid: fa664a2c8e4a3454583a704384de6ddb, type: 2}
+  - {fileID: 11400000, guid: 643a95552c4672e48871d5d314a0f3ff, type: 2}
+  - {fileID: 11400000, guid: 857f7b1c8ddb16341b2803bbf4b8fe71, type: 2}
+  - {fileID: 11400000, guid: 666ad34e4a2035c45bb56f125ddc87fe, type: 2}

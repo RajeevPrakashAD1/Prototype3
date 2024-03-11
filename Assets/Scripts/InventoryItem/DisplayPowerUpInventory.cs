@@ -62,8 +62,8 @@ public class DisplayPowerUpInventory : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in PowerUpitemsDisplayed)
         {
-            Debug.Log(_slot.Value);
-            Debug.Log(_slot.Value + "   " + _slot.Value.ID + " ");
+           // Debug.Log(_slot.Value);
+            //Debug.Log(_slot.Value + "   " + _slot.Value.ID + " ");
 
             if (_slot.Value.ID >= 0)
 
@@ -85,9 +85,9 @@ public class DisplayPowerUpInventory : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("chil not nll");
+                   // Debug.Log("chil not nll");
                 }
-                Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
+               // Debug.Log("slot................ " + _slot.Key.transform.GetChild(0));
 
                 _slot.Key.transform.GetComponent<Image>().sprite = database.GetItemPowerUp[_slot.Value.item.Id].img;
                 _slot.Key.transform.GetComponent<Image>().color = new Color(1, 1, 1, 1);
@@ -106,7 +106,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
     public Vector3 GetPowerUpSlotPosition(int i)
     {
         float pos = (X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)));
-        Debug.Log("position " + pos);
+       // Debug.Log("position " + pos);
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN))+450, Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
 

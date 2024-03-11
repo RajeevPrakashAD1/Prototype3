@@ -9,17 +9,21 @@ public class GunMain : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction shootAction;
     private InputAction reloadAction;
+    public BulletInventory inventory;
+    
 
     [SerializeField] private GameObject shootPoint;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject bulletParent;
+    public GameObject bulletPrefab;
+    public int bulletHoldingId;
+
+    public BulletManager bmng;
 
 
     private Transform mainCamera;
     private bool canShoot = true; // Control fire rate
     private float nextShootTime = 0f; // Time for next allowed shot
-    private float currentAmmo; // Current ammo count
-    private float maxAmmo; // Maximum ammo count (magazine size)
+    private int currentAmmo=0; // Current ammo count
+    private int maxAmmo; // Maximum ammo count (magazine size)
     private float reloadTime; // Reload time
     public bool equipped;
     public Text reloadText;
@@ -53,6 +57,29 @@ public class GunMain : MonoBehaviour
        
         reloadTime = gunData.reloadTime;
         
+
+        
+    }
+    private void Update()
+    {
+
+        if (equipped) chooseBullet();
+       
+    }
+    public void chooseBullet()
+    {
+        if (!equipped) return;
+        // BulletManager bmng = bulletParent.GetComponent<BulletManager>();
+        
+        
+        bulletPrefab = bmng.bullet;
+        bulletHoldingId = bmng.BulletHoldingid;
+      //  Debug.Log(this.gameObject + "  choosing bullet" + bmng.bullet + " " + bmng.BulletHoldingid + " " + bulletHoldingId);
+        if (inventory == null)
+        {
+            inventory = bmng.bulletInventory;
+        }
+        
     }
 
     private void OnEnable()
@@ -81,22 +108,25 @@ public class GunMain : MonoBehaviour
         
 
     }
-    private void Update()
-    {
-        
-    }
+
 
 
     private void ShootGun()
     {
-
+        if (!equipped)
+        {
+            reloadText.text = "Reloading...";
+            return;
+        }
+        Debug.Log("gameobject being called " + this.gameObject);
        //if(equipped) Debug.Log("equipped" + equipped + " " + currentAmmo +"maxammo "+ maxAmmo + " "+ nextShootTime +" "+Time.time);
              
-        if (equipped && canShoot && Time.time >= nextShootTime)
+        if (equipped && canShoot && Time.time >= nextShootTime && bulletPrefab != null)
         {
             //Debug.Log("initiating bullet");
             if (currentAmmo > 0)
             {
+               
 
 
                 GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, Quaternion.identity);
@@ -108,24 +138,26 @@ public class GunMain : MonoBehaviour
                 int layer1 = LayerMask.NameToLayer("Player");
                 int layer2 = LayerMask.NameToLayer("PlayerProtection");
                 int layer3 = LayerMask.NameToLayer("PlayerGun");
+                int layer4 = LayerMask.NameToLayer("Enemy");
+                int layer5 = LayerMask.NameToLayer("BigEnemy");
 
                 // Combine layers using bitwise OR operations
-                int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3);
+                int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3)  ;
 
                 // Invert the combined mask to exclude specified layers
                 int layerMask = ~excludedLayers;
 
-                RaycastHit hit;
-                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 200f,layerMask))
+              RaycastHit hit;
+                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 300f,layerMask))
                 {
                     Debug.Log("hit : " + hit.collider.gameObject +" "+ hit.point);
                     bulletCtrl.target = hit.point;
-                    //bulletCtrl.hit = true;
+                  bulletCtrl.hit = true;
                 }
                 else
                 {
                     bulletCtrl.target = mainCamera.position + mainCamera.forward * 55f;
-                   // bulletCtrl.hit = false;
+                   bulletCtrl.hit = false;
                 }
 
                 // Reduce ammo count
@@ -136,11 +168,16 @@ public class GunMain : MonoBehaviour
                 // Debug.Log("making can shoot false");
                 canShoot = false;
                 Invoke("ResetShoot", 1f / gunData.fireRate);
+                reloadText.text = currentAmmo.ToString();
             }
             else
             {
                 Reload();
             }
+        }
+        else
+        {   if (!equipped) reloadText.text = "No Gun";
+            else if(bulletPrefab == null || currentAmmo <= 0) reloadText.text = "No bullet";
         }
     }
 
@@ -152,10 +189,23 @@ public class GunMain : MonoBehaviour
 
     public void Reload()
     {
-
+        if (!equipped) return;
         // Reload logic
         if (reloadText) reloadText.text = "Realoading....";
-        currentAmmo = maxAmmo; // Refill ammo
+        int totalAmmo;
+        for(int i=0;i< inventory.Items.Length; i++)
+        {
+            if(inventory.Items[i].ID == bulletHoldingId)
+            {
+                totalAmmo = inventory.Items[i].amount;
+                int bulletToReload = Mathf.Min(totalAmmo, maxAmmo);
+                inventory.Items[i].amount -= (bulletToReload-currentAmmo);
+                currentAmmo = bulletToReload;
+                
+            }
+        }
+
+        
         Debug.Log("Reloading..."+currentAmmo+ " "+ maxAmmo);
         Invoke("ResetReload", reloadTime); // Reset reload time
         canShoot = false;
@@ -163,8 +213,9 @@ public class GunMain : MonoBehaviour
 
     private void ResetReload()
     {
+
         Debug.Log("Reload complete.");
         canShoot = true;
-        if (reloadText) reloadText.text = "";
+        if (reloadText) reloadText.text = currentAmmo.ToString();
     }
 }

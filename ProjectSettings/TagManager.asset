@@ -23,6 +23,7 @@ TagManager:
   - PlayerProtection
   - PlayerGun
   - InventoryItemDisplay
+  - GroundBullet
   layers:
   - Default
   - TransparentFX
