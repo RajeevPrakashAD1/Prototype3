@@ -28,6 +28,7 @@ public class DisplayGunInventory : MonoBehaviour
     void Start()
     {
         CreateSlots();
+        
     }
 
     // Update is called once per frame
@@ -150,9 +151,9 @@ public class DisplayGunInventory : MonoBehaviour
 
                 // Destroy the old gun
                 // Debug.Log("destroying old gun");
-                if(Player.transform.childCount > 3)
+                if(Player.transform.childCount > 4)
                 {
-                    Destroy(Player.transform.GetChild(3).gameObject);
+                    Destroy(Player.transform.GetChild(4).gameObject);
                 }
 
                 // Create a new gun object and set its position and rotation

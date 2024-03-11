@@ -30,11 +30,11 @@ public class GunSpawner : MonoBehaviour
             float spawnRadius = 100f;
 
             // Generate random positions within the specified range
-            Vector3 randomOffset = new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius));
+            Vector3 randomOffset = new Vector3(Random.Range(-spawnRadius, spawnRadius), 2f, Random.Range(-spawnRadius, spawnRadius));
             Vector3 randomPosition = centerPosition + randomOffset;
 
             // Sample a position on the NavMesh from the generated random position
-            if (NavMesh.SamplePosition(randomPosition, out hit, 50f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPosition, out hit, 300f, NavMesh.AllAreas))
             {
                 randomPosition = hit.position;
             }

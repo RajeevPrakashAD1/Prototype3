@@ -34,7 +34,7 @@ public class MenuManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             Debug.Log("calling reset");
-            GameManager.Instance.Reset();
+           GameManager.Instance.Reset();
         }
         else
         {
