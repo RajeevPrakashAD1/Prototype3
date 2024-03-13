@@ -9,8 +9,8 @@ public class GunMain : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction shootAction;
     private InputAction reloadAction;
+
     public BulletInventory inventory;
-    
 
     [SerializeField] private GameObject shootPoint;
     public GameObject bulletPrefab;
@@ -63,7 +63,7 @@ public class GunMain : MonoBehaviour
     private void Update()
     {
 
-        if (equipped) chooseBullet();
+        //if (equipped) chooseBullet();
        
     }
     public void chooseBullet()
@@ -84,6 +84,8 @@ public class GunMain : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("enabling....");
+
         shootAction.performed += _ => ShootGun();
         reloadAction.performed += _ => Reload();
     }
@@ -113,12 +115,13 @@ public class GunMain : MonoBehaviour
 
     private void ShootGun()
     {
+       // Debug.Log("shooting");
         if (!equipped)
         {
-            reloadText.text = "Reloading...";
+            reloadText.text = "No Gun";
             return;
         }
-        Debug.Log("gameobject being called " + this.gameObject);
+      // Debug.Log("gameobject being called " + this.gameObject);
        //if(equipped) Debug.Log("equipped" + equipped + " " + currentAmmo +"maxammo "+ maxAmmo + " "+ nextShootTime +" "+Time.time);
              
         if (equipped && canShoot && Time.time >= nextShootTime && bulletPrefab != null)
@@ -132,8 +135,11 @@ public class GunMain : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, Quaternion.identity);
                 BulletCtrl bulletCtrl = bullet.GetComponent<BulletCtrl>();
 
+                Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+
                 // Set bullet damage
-                bulletCtrl.damage = gunData.damage;
+                bulletCtrl.damage = gunData.damage+bulletCtrl.bulletData.damage;
                 // Define layers to exclude
                 int layer1 = LayerMask.NameToLayer("Player");
                 int layer2 = LayerMask.NameToLayer("PlayerProtection");
@@ -142,22 +148,30 @@ public class GunMain : MonoBehaviour
                 int layer5 = LayerMask.NameToLayer("BigEnemy");
 
                 // Combine layers using bitwise OR operations
-                int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3)  ;
+                int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3);
 
                 // Invert the combined mask to exclude specified layers
                 int layerMask = ~excludedLayers;
 
-              RaycastHit hit;
-                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 300f,layerMask))
+                RaycastHit hit;
+                if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 500f, layerMask))
                 {
-                    Debug.Log("hit : " + hit.collider.gameObject +" "+ hit.point);
-                    bulletCtrl.target = hit.point;
-                  bulletCtrl.hit = true;
+                    /*  Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
+                      bulletCtrl.target = hit.point;
+                      bulletCtrl.hit = true;*/
+                    Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
+                    Vector3 direction = hit.point - bullet.transform.position;
+                    if (rb != null)
+                    {
+                        rb.AddForce(direction.normalized * (500 *bulletCtrl.bulletData.speed));
+                    }
+
                 }
                 else
                 {
-                    bulletCtrl.target = mainCamera.position + mainCamera.forward * 55f;
-                   bulletCtrl.hit = false;
+                    /* bulletCtrl.target = mainCamera.position + mainCamera.forward * 55f;
+                     bulletCtrl.hit = false;*/
+                    rb.AddForce(mainCamera.forward * (500 * bulletCtrl.bulletData.speed));
                 }
 
                 // Reduce ammo count

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private float speed = 20f; // Speed of the bullet
+    private float speed = 50f; // Speed of the bullet
     private Vector3 targetPosition; // Position to travel towards
     private bool hasHitPlayer = false; // Flag to track if the bullet has hit the player
 

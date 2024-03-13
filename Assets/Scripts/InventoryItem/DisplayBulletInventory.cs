@@ -28,8 +28,8 @@ public class DisplayBulletInventory : MonoBehaviour
 
     void Start()
     {
-       // gunmain = Player.transform.GetComponentInChildren<GunMain>();
-        
+        // gunmain = Player.transform.GetComponentInChildren<GunMain>();
+        inventory.Items = new InventorySlot[4];
         CreateSlots();
         bulletManager.SetBullet(null, -1);
        // gunmain.chooseBullet();
@@ -58,20 +58,22 @@ public class DisplayBulletInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
             AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
-
+            inventory.Items[i] = new InventorySlot();
             PowerUpitemsDisplayed.Add(obj, inventory.Items[i]);
-            // Debug.Log(inventory.Container.Items[i].item.Name);
 
+           // Debug.Log(PowerUpitemsDisplayed[obj] + " " + inventory.Items[i]);
         }
-        
+       // Debug.Log(PowerUpitemsDisplayed.Count);
     }
 
     public void UpdateSlots()
     {
+        //Debug.Log(PowerUpitemsDisplayed.Count);
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in PowerUpitemsDisplayed)
         {
-            //Debug.Log(_slot.Value);
-            //Debug.Log(_slot.Value + "   " + _slot.Value.ID + " ");
+          /*  Debug.Log(_slot.Value);
+            Debug.Log(_slot.Key);
+            Debug.Log(_slot.Value + "   " + _slot.Value.ID + " ");*/
 
             if (_slot.Value.ID >= 0)
 
@@ -136,7 +138,7 @@ public class DisplayBulletInventory : MonoBehaviour
     public void OnClick(GameObject obj)
     {
 
-        Debug.Log("onclick");
+       // Debug.Log("onclick");
         if(!PowerUpitemsDisplayed.ContainsKey(obj) || PowerUpitemsDisplayed[obj].ID <0)
         {
             return;

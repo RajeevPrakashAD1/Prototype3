@@ -27,6 +27,7 @@ public class DisplayGunInventory : MonoBehaviour
 
     void Start()
     {
+        inventory.Items = new InventorySlot[4];
         CreateSlots();
         
     }
@@ -40,7 +41,7 @@ public class DisplayGunInventory : MonoBehaviour
     public void CreateSlots()
     {
         GunItemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-       // Debug.Log("gun inventory length++" + inventory.Items.Length);
+       Debug.Log("gun inventory length++" + inventory.Items.Length);
         for (int i = 0; i < inventory.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPowerUpPrefab, Vector3.zero, Quaternion.identity, transform);
@@ -53,7 +54,7 @@ public class DisplayGunInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
             AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
-
+            inventory.Items[i] = new InventorySlot();
             GunItemsDisplayed.Add(obj, inventory.Items[i]);
             // Debug.Log(inventory.Container.Items[i].item.Name);
 
@@ -151,9 +152,9 @@ public class DisplayGunInventory : MonoBehaviour
 
                 // Destroy the old gun
                 // Debug.Log("destroying old gun");
-                if(Player.transform.childCount > 4)
+                if(Player.transform.childCount > 5)
                 {
-                    Destroy(Player.transform.GetChild(4).gameObject);
+                    Destroy(Player.transform.GetChild(5).gameObject);
                 }
 
                 // Create a new gun object and set its position and rotation

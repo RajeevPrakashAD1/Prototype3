@@ -7,35 +7,58 @@ public class BulletCtrl : MonoBehaviour
     [SerializeField]
     private GameObject bulletDecal;
     public BulletData bulletData;
-   
+    public float bulletForce = 1;
+    private Transform mainCamera;
     public Vector3 target { get; set; }
     public bool hit { get; set; }
     public float damage { get; set; }
     private void OnEnable()
     {
-        //Destroy(gameObject, bulletData.ttl);
+       Destroy(gameObject, bulletData.ttl);
     }
     private void Update()
     {
-        Vector3 direction = (target - transform.position).normalized;
-        float distanceAhead = 0.5f; // Adjust this value to determine how far ahead the new target should be
-        Vector3 newTarget = target + direction * distanceAhead;
-        transform.position = Vector3.MoveTowards(transform.position, target, bulletData.speed * Time.deltaTime);
-         Debug.Log(transform.position + " " + target);
-        if (Vector3.Distance(transform.position, target) < 0.1f)
-        {
-            //Destroy(gameObject);
-            Debug.Log("reached pos");
-        }
+        
 
     }
     private void Start()
     {
-       // Debug.Log("target + " + target);
+        mainCamera = Camera.main.transform;
+      
+       int layer1 = LayerMask.NameToLayer("Player");
+       int layer2 = LayerMask.NameToLayer("PlayerProtection");
+       int layer3 = LayerMask.NameToLayer("PlayerGun");
+       int layer4 = LayerMask.NameToLayer("Enemy");
+       int layer5 = LayerMask.NameToLayer("BigEnemy");
 
+       // Combine layers using bitwise OR operations
+       int excludedLayers = (1 << layer1) | (1 << layer2) | (1 << layer3)  ;
+
+
+
+      /*  Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+           Debug.LogError("Rigidbody component not found on bullet prefab.");
+        }
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, mainCamera.forward, out hit, 300f,excludedLayers))
+        {
+            Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
+            Vector3 direction = hit.point - transform.position;
+           if (rb != null)
+           {
+               rb.AddForce(direction.normalized * (bulletForce * bulletData.speed));
+           }
+        }
+        else
+        {
+            Debug.Log("going in else");
+           rb.AddForce(mainCamera.position * (bulletForce * bulletData.speed));
+        }*/
 
     }
-     
+
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Collided with: " + collision.gameObject.tag , collision.gameObject);
@@ -44,16 +67,15 @@ public class BulletCtrl : MonoBehaviour
         // Destroy the bullet and the collided object
         if (collision.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
+           Destroy(gameObject);
+           Destroy(collision.gameObject);
         }
         if(collision.gameObject.tag == "Terrain")
         {
-            Destroy(gameObject);
+           Destroy(gameObject);
         }
 
     }
-   
+
 
 }
-    

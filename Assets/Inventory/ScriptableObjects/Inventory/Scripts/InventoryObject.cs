@@ -68,29 +68,14 @@ public abstract class InventoryObject<T> : ScriptableObject where T : InventoryS
 }
 
 
-[CreateAssetMenu(fileName = "New PowerUp Inventory", menuName = "Inventory System/PowerUp Inventory")]
-public class PowerUpInventory : InventoryObject<InventorySlot>
-{
-    // Add any specific methods or properties for power-up inventory here
-}
 
 
 
 
-[CreateAssetMenu(fileName = "New Gun Inventory", menuName = "Inventory System/Gun Inventory")]
-public class GunInventory : InventoryObject<InventorySlot>
-{
-    // Add any specific methods or properties for gun inventory here
-}
 
 
 
 
-[CreateAssetMenu(fileName = "New Bullet Inventory", menuName = "Inventory System/Bullet Inventory")]
-public class BulletInventory : InventoryObject<InventorySlot>
-{
-    // Add any specific methods or properties for bullet inventory here
-}
 
 
 
@@ -156,6 +141,7 @@ public class InventorySlot
         item = _item;
         amount = _amount;
     }
+    
 
     public void AddAmount(int value)
     {

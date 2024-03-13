@@ -16,4 +16,4 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 28338e97133dbac4bafe7cef468b1c62, type: 3}
   type: 1
   description: 
-  energy: 750
+  energy: 3000

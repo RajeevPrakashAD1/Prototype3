@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: a94355367ac43874c9f81542fb9a8f2a, type: 2}
-  inventory: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 7a93a83f89f4ebc4b9994db6df80e4d4, type: 2}
   shootPoint: {fileID: 700231310757386767}
   bulletPrefab: {fileID: 0}
   bulletHoldingId: 0

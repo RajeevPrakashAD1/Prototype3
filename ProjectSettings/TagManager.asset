@@ -24,6 +24,7 @@ TagManager:
   - PlayerGun
   - InventoryItemDisplay
   - GroundBullet
+  - Grenade
   layers:
   - Default
   - TransparentFX

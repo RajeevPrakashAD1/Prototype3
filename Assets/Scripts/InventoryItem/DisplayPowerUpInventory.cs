@@ -25,6 +25,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
 
     void Start()
     {
+        inventory.Items = new InventorySlot[6];
         CreateSlots();
     }
 
@@ -50,7 +51,7 @@ public class DisplayPowerUpInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
             AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
-
+            inventory.Items[i] = new InventorySlot();
             PowerUpitemsDisplayed.Add(obj, inventory.Items[i]);
             // Debug.Log(inventory.Container.Items[i].item.Name);
 

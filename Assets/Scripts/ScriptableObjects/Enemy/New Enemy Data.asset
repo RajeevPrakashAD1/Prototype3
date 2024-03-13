@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: One
   health: 100
-  shootingRate: 5
+  shootingRate: 7
   shootingInterval: 3
   shootingRange: 50
   speed: 0

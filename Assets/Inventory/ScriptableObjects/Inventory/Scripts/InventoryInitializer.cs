@@ -1,26 +1,31 @@
+using System.Collections;
 using UnityEngine;
 
 public class InventoryInitializer : MonoBehaviour
 {
-    public PowerUpInventory powerUpInventoryPrefab; // Assign in the inspector
-    public GunInventory gunInventoryPrefab; // Assign in the inspector
-    public BulletInventory bulletInventoryPrefab; // Assign in the inspector
+    public GameObject InventoryParent;
 
     void Start()
     {
-
+        //InitializeInventories();
+        if(InventoryParent != null)
+        {
+            StartCoroutine(DeactivateObjectAfterDelay());
+        }
     }
 
     private void OnApplicationQuit()
     {
-        InitializeInventories();
+        
     }
 
-    public void InitializeInventories()
+    IEnumerator DeactivateObjectAfterDelay()
     {
-        powerUpInventoryPrefab.Items = new InventorySlot[6];
-        gunInventoryPrefab.Items = new InventorySlot[4];
-        bulletInventoryPrefab.Items = new InventorySlot[4];
+        // Wait for 0.5 seconds
+        yield return new WaitForSeconds(0.01f);
+
+        // Deactivate the target object
+        InventoryParent.SetActive(false);
     }
 
 }
