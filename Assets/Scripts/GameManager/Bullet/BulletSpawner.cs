@@ -35,22 +35,19 @@ public class BulletSpawner : MonoBehaviour
             Vector3 randomPosition = centerPosition + randomOffset;
 
             // Sample a position on the NavMesh from the generated random position
-            if (NavMesh.SamplePosition(randomPosition, out hit, 300f, NavMesh.AllAreas))
+            if (Physics.Raycast(randomPosition + Vector3.up * 1000f, Vector3.down, out RaycastHit raycastHit, Mathf.Infinity, NavMesh.AllAreas))
             {
-                randomPosition = hit.position;
-            }
-            else
-            {
-                // Failed to find a valid position, skip this iteration
-                continue;
-            }
+                // Check if the hit point is on the NavMesh
+                if (NavMesh.SamplePosition(raycastHit.point, out hit, 300f, NavMesh.AllAreas))
+                {
+                    // Instantiate the current gun type at the sampled NavMesh position
+                    GameObject newGun = Instantiate(currentGunPrefab, hit.position+new Vector3(0,0.5f,0), Quaternion.identity, GunParent.transform);
 
-            // Instantiate the current gun type at the random position
-            GameObject newGun = Instantiate(currentGunPrefab, randomPosition + new Vector3(0,0.5f,0), Quaternion.identity, GunParent.transform);
-
-            // Update counters
-            currentGunIndex = (currentGunIndex + 1) % bulletPrefabs.Length; // Move to the next gun index in a circular manner
-            totalSpawnedCount++;
+                    // Update counters
+                    currentGunIndex = (currentGunIndex + 1) % bulletPrefabs.Length; // Move to the next gun index in a circular manner
+                    totalSpawnedCount++;
+                }
+            }
         }
     }
 }

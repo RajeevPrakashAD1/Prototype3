@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
@@ -12,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject InstPrompt;
     public LevelData levelData;
-    private float playerSpeed = 8f;
+    private float playerSpeed = 15f;
     public int currentLevel = 1;
 
     // Current weapon
@@ -20,7 +22,13 @@ public class GameManager : MonoBehaviour
     //collided weapon
     public GameObject collidedWeapon;
     public Transform gunPos;
+    PlayerInput playerInput;
     // Public property to access the singleton instance
+    public int numofEnemyKill = 0;
+    public GameObject prompt;
+    private bool bigEnemyPromptDisplayed;
+    public int ActiveSlot =0;
+
     public static GameManager Instance
     {
         get
@@ -57,13 +65,21 @@ public class GameManager : MonoBehaviour
         }
         //levelData = GameManager.instance.levelData;
         Application.targetFrameRate = 60;
-        
+        playerInput = GetComponent<PlayerInput>();
+
     }
    
     public void Reset()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        
+       /* if(prompt == null)
+        {
+            prompt = GameObject.FindGameObjectWithTag("Prompt");
+        }*/
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.enabled = false;
+        playerInput.enabled = true;
+
         InventoryInitializer ii = GameObject.FindGameObjectWithTag("InventoryItemDisplay").GetComponent<InventoryInitializer>();
        /* ii.InitializeInventories();*/
 
@@ -83,7 +99,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("didnt get healthBar");
         }
         playerHealth = 9900;
-        playerSpeed = 12f;
+        playerSpeed = 15f;
+        numofEnemyKill = 0;
+        ActiveSlot = 0;
+
 
     }
 
@@ -160,5 +179,25 @@ public class GameManager : MonoBehaviour
     {
         currentWeapon = newWeapon;
         Debug.Log("Player switched to ");
+    }
+
+    public void KillEnemy()
+    {
+        numofEnemyKill++;
+        if(numofEnemyKill >= levelData.numOfEnemiesToKill && !bigEnemyPromptDisplayed) { }
+        {
+            //will show prompt of big enemy appearance.
+            TextMeshProUGUI tmp = prompt.GetComponentInChildren<TextMeshProUGUI>();
+            tmp.text = "Go Kill All The Big Enemy To Complete this Level";
+            bigEnemyPromptDisplayed = true;
+
+        }
+    }
+
+    public void ChangeActiveSlot(int i)
+    {
+        ActiveSlot = i;
+
+        player.GetComponent<PickGun>().Pick();
     }
 }

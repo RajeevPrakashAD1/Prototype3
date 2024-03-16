@@ -11,4 +11,5 @@ public class LevelData : ScriptableObject
     public float smallEnemyFireRate; // Fire rate of small enemies
     public float smallEnemyDamage;
     public float bigEnemyDamage;
+    public int numOfEnemiesToKill;
 }

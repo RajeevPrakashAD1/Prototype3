@@ -17,4 +17,7 @@ MonoBehaviour:
   fireRate: 20
   magazineSize: 5
   reloadTime: 0.5
+  recoil: 0.4
+  recoilRecoverySpeed: 60
+  bulletType: 3
   img: {fileID: 2005472213, guid: dc0ece44f72b4264c8dd8c284b50a6c7, type: 3}

@@ -17,4 +17,5 @@ MonoBehaviour:
   shootingRate: 7
   shootingInterval: 3
   shootingRange: 50
-  speed: 0
+  chasingRange: 100
+  speed: 3

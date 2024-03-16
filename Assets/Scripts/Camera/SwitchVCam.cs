@@ -19,6 +19,7 @@ public class SwitchVAam : MonoBehaviour
     {
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         aimAction = playerInput.actions["Aim"];
+        ZoomCanvas.enabled = false;
         if(aimAction == null)
         {
             Debug.Log("aim action not found");

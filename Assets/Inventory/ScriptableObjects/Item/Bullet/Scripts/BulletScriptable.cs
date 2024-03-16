@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Bullet", menuName = "ScriptableObjects/Bullet")]
 public class BulletData : ScriptableObject
 {
+    public int type;
     public float speed = 20f;
     public float damage = 10f;
     public float ttl = 3f;

@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Gun1
   damage: 10
-  fireRate: 10
+  fireRate: 20
   magazineSize: 20
   reloadTime: 2
+  recoil: 0.2
+  recoilRecoverySpeed: 50
+  bulletType: 1
   img: {fileID: 858414502, guid: dc0ece44f72b4264c8dd8c284b50a6c7, type: 3}

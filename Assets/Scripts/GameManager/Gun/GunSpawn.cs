@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class GunSpawner : MonoBehaviour
 {
     public GameObject[] gunPrefabs;
-    public int spawnCountPerGun = 15;
+    public int spawnCountPerGun = 50;
     public GameObject GunParent;
 
     private int currentGunIndex = 0;
@@ -33,23 +33,19 @@ public class GunSpawner : MonoBehaviour
             Vector3 randomOffset = new Vector3(Random.Range(-spawnRadius, spawnRadius), 2f, Random.Range(-spawnRadius, spawnRadius));
             Vector3 randomPosition = centerPosition + randomOffset;
 
-            // Sample a position on the NavMesh from the generated random position
-            if (NavMesh.SamplePosition(randomPosition, out hit, 300f, NavMesh.AllAreas))
+            if (Physics.Raycast(randomPosition + Vector3.up * 1000f, Vector3.down, out RaycastHit raycastHit, Mathf.Infinity, NavMesh.AllAreas))
             {
-                randomPosition = hit.position;
-            }
-            else
-            {
-                // Failed to find a valid position, skip this iteration
-                continue;
-            }
+                // Check if the hit point is on the NavMesh
+                if (NavMesh.SamplePosition(raycastHit.point, out hit, 300f, NavMesh.AllAreas))
+                {
+                    // Instantiate the current gun type at the sampled NavMesh position
+                    GameObject newGun = Instantiate(currentGunPrefab, hit.position+ new Vector3(0,0.3f,0), Quaternion.identity, GunParent.transform);
 
-            // Instantiate the current gun type at the random position
-            GameObject newGun = Instantiate(currentGunPrefab, randomPosition, Quaternion.identity, GunParent.transform);
-
-            // Update counters
-            currentGunIndex = (currentGunIndex + 1) % gunPrefabs.Length; // Move to the next gun index in a circular manner
-            totalSpawnedCount++;
+                    // Update counters
+                    currentGunIndex = (currentGunIndex + 1) % gunPrefabs.Length; // Move to the next gun index in a circular manner
+                    totalSpawnedCount++;
+                }
+            }
         }
     }
 }

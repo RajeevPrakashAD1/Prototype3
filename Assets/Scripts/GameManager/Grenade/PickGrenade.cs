@@ -26,7 +26,7 @@ public class PickGrenade : MonoBehaviour
     }
     public void OnCollisionEnter(Collision other)
     {
-        Debug.Log("collided"+other.gameObject.tag);
+        //Debug.Log("collided"+other.gameObject.tag);
         if (other.gameObject.tag == "Grenade")
         {
             grenade.IncGrenade();

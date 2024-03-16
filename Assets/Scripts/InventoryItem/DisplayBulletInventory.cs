@@ -13,7 +13,7 @@ public class DisplayBulletInventory : MonoBehaviour
     private GameObject currentTickButton;
 
     public GameObject Player;
-    public BulletManager bulletManager;
+   // public BulletManager bulletManager;
     public BulletInventory inventory;
     public ItemDatabaseObject database;
     public int X_START;
@@ -23,17 +23,18 @@ public class DisplayBulletInventory : MonoBehaviour
     public int Y_SPACE_BETWEEN_ITEMS;
     public EquipPowerUp equip;
    public GunMain gunmain;
-    Dictionary<GameObject, InventorySlot> PowerUpitemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+    Dictionary<GameObject, InventorySlot> PowerUpitemsDisplayed;
     private bool bulletEquipped;
-
+    public HandleBulletInventory handleBulletInventory;
     void Start()
     {
         // gunmain = Player.transform.GetComponentInChildren<GunMain>();
         inventory.Items = new InventorySlot[4];
         CreateSlots();
-        bulletManager.SetBullet(null, -1);
+        PowerUpitemsDisplayed = handleBulletInventory.PowerUpitemsDisplayed;
+       // bulletManager.SetBullet(null, -1);
        // gunmain.chooseBullet();
-       
+
     }
 
     // Update is called once per frame
@@ -44,7 +45,7 @@ public class DisplayBulletInventory : MonoBehaviour
 
     public void CreateSlots()
     {
-        PowerUpitemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+        //PowerUpitemsDisplayed = new Dictionary<GameObject, InventorySlot>();
          //Debug.Log("inventory bullet length++" + inventory.Items.Length);
         for (int i = 0; i < inventory.Items.Length; i++)
         {
@@ -56,10 +57,11 @@ public class DisplayBulletInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
-            AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
+            //AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
             inventory.Items[i] = new InventorySlot();
-            PowerUpitemsDisplayed.Add(obj, inventory.Items[i]);
+            // PowerUpitemsDisplayed.Add(obj, inventory.Items[i]);
+            handleBulletInventory.AddBulletToInventorySlot(obj, inventory.Items[i]);
 
            // Debug.Log(PowerUpitemsDisplayed[obj] + " " + inventory.Items[i]);
         }
@@ -135,7 +137,7 @@ public class DisplayBulletInventory : MonoBehaviour
     }
 
 
-    public void OnClick(GameObject obj)
+   /* public void OnClick(GameObject obj)
     {
 
        // Debug.Log("onclick");
@@ -143,12 +145,12 @@ public class DisplayBulletInventory : MonoBehaviour
         {
             return;
         }
-        bulletManager.SetBullet(database.GetItemBullet[PowerUpitemsDisplayed[obj].ID].model, PowerUpitemsDisplayed[obj].ID);
+       // bulletManager.SetBullet(database.GetItemBullet[PowerUpitemsDisplayed[obj].ID].model, PowerUpitemsDisplayed[obj].ID);
         
         //gunmain.chooseBullet();
         ShowTickButton(obj.transform.position);
         bulletEquipped = true;
-    }
+    }*/
     public void OnEnter(GameObject obj)
     {
         // Debug.Log("mouse Item hovering.... on enter");
@@ -220,6 +222,8 @@ public class DisplayBulletInventory : MonoBehaviour
             currentTickButton = null;
         }
     }
+
+  
 
 
 

@@ -61,7 +61,7 @@ public class BulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.tag , collision.gameObject);
+        //Debug.Log("Collided with: " + collision.gameObject.tag , collision.gameObject);
 
 
         // Destroy the bullet and the collided object
@@ -69,6 +69,7 @@ public class BulletCtrl : MonoBehaviour
         {
            Destroy(gameObject);
            Destroy(collision.gameObject);
+            GameManager.Instance.KillEnemy();
         }
         if(collision.gameObject.tag == "Terrain")
         {

@@ -21,13 +21,17 @@ public class DisplayGunInventory : MonoBehaviour
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
     public EquipPowerUp equip;
-    Dictionary<GameObject, InventorySlot> GunItemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+    Dictionary<GameObject, InventoryGunSlot> GunItemsDisplayed = new Dictionary<GameObject, InventoryGunSlot>();
+    Dictionary<GameObject, int> SlotId = new Dictionary<GameObject, int>();
     private bool gunEquipped;
     public GameObject newGunEquipped;
-
+    public GameObject gunSlot1;
+    public GameObject gunSlot2;
+    public PickGun pickGun;
     void Start()
     {
-        inventory.Items = new InventorySlot[4];
+        pickGun = Player.GetComponent<PickGun>();
+        inventory.Items = new InventoryGunSlot[2];
         CreateSlots();
         
     }
@@ -40,11 +44,13 @@ public class DisplayGunInventory : MonoBehaviour
 
     public void CreateSlots()
     {
-        GunItemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-       Debug.Log("gun inventory length++" + inventory.Items.Length);
-        for (int i = 0; i < inventory.Items.Length; i++)
-        {
+        GunItemsDisplayed = new Dictionary<GameObject, InventoryGunSlot>();
+        SlotId.Clear();
+    
+        
+        for(int i = 0; i < inventory.Items.Length; i++) { 
             var obj = Instantiate(inventoryPowerUpPrefab, Vector3.zero, Quaternion.identity, transform);
+            obj.transform.GetChild(0).gameObject.SetActive(false);
             obj.GetComponent<RectTransform>().localPosition = GetPowerUpSlotPosition(i);
 
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
@@ -52,19 +58,20 @@ public class DisplayGunInventory : MonoBehaviour
             AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
-            AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
-            inventory.Items[i] = new InventorySlot();
+
+            inventory.Items[i] = new InventoryGunSlot();
             GunItemsDisplayed.Add(obj, inventory.Items[i]);
+            SlotId[obj] = i+1;
             // Debug.Log(inventory.Container.Items[i].item.Name);
-
         }
+        
 
     }
 
     public void UpdateSlots()
     {
-        foreach (KeyValuePair<GameObject, InventorySlot> _slot in GunItemsDisplayed)
+        foreach (KeyValuePair<GameObject, InventoryGunSlot> _slot in GunItemsDisplayed)
         {
             //Debug.Log(_slot.Key + "   " + _slot.Value.ID + " "+ _slot.Value.item.Name);
 
@@ -123,68 +130,7 @@ public class DisplayGunInventory : MonoBehaviour
     }
     //jo@rentomojo.com
 
-    public void OnClick(GameObject obj)
-    {
-        Debug.Log("onclick");
-        if (!GunItemsDisplayed.ContainsKey(obj) || GunItemsDisplayed[obj].ID < 0)
-        {
-            return;
-        }
-        void ChangeGun(GameObject newGun)
-        {
-            // Find the child object with the "Gun" tag
-            Transform oldGunTransform = null;
-            
-            //Debug.Log("player" + Player);
-            // if(Player != null) Debug.Log("player not null");
-            if (Player && Player.transform && Player.transform.childCount >= 1)
-            {
-                oldGunTransform = Player.transform.GetChild(0);
-            }
-
-
-            //Debug.Log("old gun" + oldGunTransform.position);
-            if (oldGunTransform != null)
-            {
-                // Save the position and rotation of the old gun
-                Vector3 oldGunPosition = oldGunTransform.position;
-                Quaternion oldGunRotation = oldGunTransform.rotation;
-
-                // Destroy the old gun
-                // Debug.Log("destroying old gun");
-                if(Player.transform.childCount > 5)
-                {
-                    Destroy(Player.transform.GetChild(5).gameObject);
-                }
-
-                // Create a new gun object and set its position and rotation
-                GameObject instantiatedNewGun = Instantiate(newGun, oldGunPosition, oldGunRotation, Player.transform);
-                instantiatedNewGun.tag = "PlayerGun";
-                instantiatedNewGun.layer = 12;
-                GunMain gunMain = instantiatedNewGun.GetComponent<GunMain>();
-               
-                
-
-
-                gunMain.equipped = true;
-                newGunEquipped = instantiatedNewGun;
-
-            }
-            else
-            {
-                Debug.Log("No gun object found as a child of the player.");
-
-
-
-
-            }
-        }
-
-        GameObject gunn = database.GetItemGun[GunItemsDisplayed[obj].ID].model;
-       ChangeGun(gunn);
-       ShowTickButton(obj.transform.position);
-        gunEquipped = true;
-    }
+    
     public void OnEnter(GameObject obj)
     {
         // Debug.Log("mouse Item hovering.... on enter");
@@ -214,21 +160,62 @@ public class DisplayGunInventory : MonoBehaviour
             img.raycastTarget = false;
         }
         mouseItem.obj = mouseObject;
-        mouseItem.item = GunItemsDisplayed[obj];
+        mouseItem.item = GunItemsDisplayed[obj];         
     }
     public void OnDragEnd(GameObject obj)
     {
         if (mouseItem.hoverObj)
         {
-            inventory.MoveItem(GunItemsDisplayed[obj], GunItemsDisplayed[mouseItem.hoverObj]);
-            if(gunEquipped) ShowTickButton(mouseItem.hoverObj.transform.position);
+            bool exchanged =  inventory.MoveItem(GunItemsDisplayed[obj], GunItemsDisplayed[mouseItem.hoverObj]);
+            if (exchanged)
+            {
+                Debug.Log("exchanged...");
+                if(GameManager.Instance.ActiveSlot == 1)
+                {
+                    gunSlot2.SetActive(true);
+                }
+                if(GameManager.Instance.ActiveSlot == 2)
+                {
+                    gunSlot1.SetActive(true);
+                }
+                Transform temp1 = null;
+                Transform temp2 = null;
+                if (gunSlot1.transform.childCount > 0)
+                {
+
+                     temp1 = gunSlot1.transform.GetChild(0);
+                    
+                }
+
+                if (gunSlot2.transform.childCount > 0)
+                {
+                     temp2 = gunSlot2.transform.GetChild(0);
+                   
+                }
+                if (temp1) temp1.SetParent(gunSlot2.transform);
+                if (temp2) temp2.SetParent(gunSlot1.transform);
+
+                
+                if (GameManager.Instance.ActiveSlot == 1)
+                {
+                    gunSlot2.SetActive(false);
+                }
+                if (GameManager.Instance.ActiveSlot == 2)
+                {
+                    gunSlot1.SetActive(false);
+                }
+
+
+            }
+
 
         }
         else
         {
             Debug.Log("aya isme");
-            inventory.RemoveItem(GunItemsDisplayed[obj].item);
-            DestroyTickButton();
+            inventory.RemoveItem(SlotId[obj]);
+            pickGun.Drop(SlotId[obj]);
+            //DestroyTickButton();
             Destroy(newGunEquipped);
            /* GunMain gunMain = newGunEquipped.GetComponent<GunMain>();
             MeshRenderer mr = newGunEquipped.GetComponent<MeshRenderer>();
@@ -239,6 +226,7 @@ public class DisplayGunInventory : MonoBehaviour
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;
+        pickGun.Pick();
     }
     public void OnDrag(GameObject obj)
     {

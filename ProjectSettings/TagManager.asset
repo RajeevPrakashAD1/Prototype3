@@ -25,6 +25,7 @@ TagManager:
   - InventoryItemDisplay
   - GroundBullet
   - Grenade
+  - Prompt
   layers:
   - Default
   - TransparentFX

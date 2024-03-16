@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class GrenadeSpawner : MonoBehaviour
 {
-    public GameObject[] bulletPrefabs;
+    public GameObject[] grenadePrefabs;
     public int spawnCountPerGun = 30;
     public Transform GrenadeParent;
 
@@ -19,10 +19,10 @@ public class GrenadeSpawner : MonoBehaviour
     {
 
         //Debug.Log("spawining grenade///");
-        while (totalSpawnedCount < spawnCountPerGun * bulletPrefabs.Length)
+        while (totalSpawnedCount < spawnCountPerGun * grenadePrefabs.Length)
         {
             // Get the current gun prefab to spawn
-            GameObject currentGunPrefab = bulletPrefabs[currentGunIndex];
+            GameObject currentGunPrefab = grenadePrefabs[currentGunIndex];
             //currentGunPrefab.transform.localScale *= 2;
 
             // Sample a random position on the NavMesh
@@ -35,24 +35,19 @@ public class GrenadeSpawner : MonoBehaviour
             Vector3 randomPosition = centerPosition + randomOffset;
 
             // Sample a position on the NavMesh from the generated random position
-            if (NavMesh.SamplePosition(randomPosition, out hit, 300f, NavMesh.AllAreas))
+            if (Physics.Raycast(randomPosition + Vector3.up * 1000f, Vector3.down, out RaycastHit raycastHit, Mathf.Infinity, NavMesh.AllAreas))
             {
-                randomPosition = hit.position;
+                // Check if the hit point is on the NavMesh
+                if (NavMesh.SamplePosition(raycastHit.point, out hit, 300f, NavMesh.AllAreas))
+                {
+                    // Instantiate the current gun type at the sampled NavMesh position
+                    GameObject newGun = Instantiate(currentGunPrefab, hit.position+ new Vector3(0, 0.3f, 0), Quaternion.identity, GrenadeParent.transform);
+
+                    // Update counters
+                    currentGunIndex = (currentGunIndex + 1) % grenadePrefabs.Length; // Move to the next gun index in a circular manner
+                    totalSpawnedCount++;
+                }
             }
-            else
-            {
-                // Failed to find a valid position, skip this iteration
-                continue;
-            }
-
-            // Instantiate the current gun type at the random position
-
-            //Debug.Log("instantating...grenade");
-            GameObject newGun = Instantiate(currentGunPrefab, randomPosition + new Vector3(0,0.5f,0), Quaternion.identity, GrenadeParent);
-
-            // Update counters
-            currentGunIndex = (currentGunIndex + 1) % bulletPrefabs.Length; // Move to the next gun index in a circular manner
-            totalSpawnedCount++;
         }
     }
 }

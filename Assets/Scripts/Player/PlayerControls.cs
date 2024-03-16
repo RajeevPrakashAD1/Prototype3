@@ -41,7 +41,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""d937a68e-3d76-445a-88d1-3b4e838abf73"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""ScaleVector2(x=2,y=2)"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -91,13 +91,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TouchScreen"",
-                    ""type"": ""Button"",
-                    ""id"": ""909adbdf-37c8-4fba-8fdc-9e2ba0a8f945"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""DragScreen"",
+                    ""type"": ""Value"",
+                    ""id"": ""4c583ad2-2283-46f4-bf4a-ee6c5d202b00"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -180,12 +180,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""01454a22-fbad-46bc-9e15-9d0621d52b26"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""id"": ""ad086c1d-7857-44f5-9b89-24099d8f596d"",
+                    ""path"": ""<Pen>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TouchScreen"",
+                    ""action"": ""DragScreen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -203,7 +203,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_PickGun = m_Player.FindAction("PickGun", throwIfNotFound: true);
         m_Player_Grenade = m_Player.FindAction("Grenade", throwIfNotFound: true);
-        m_Player_TouchScreen = m_Player.FindAction("TouchScreen", throwIfNotFound: true);
+        m_Player_DragScreen = m_Player.FindAction("DragScreen", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -272,7 +272,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_PickGun;
     private readonly InputAction m_Player_Grenade;
-    private readonly InputAction m_Player_TouchScreen;
+    private readonly InputAction m_Player_DragScreen;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -284,7 +284,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @PickGun => m_Wrapper.m_Player_PickGun;
         public InputAction @Grenade => m_Wrapper.m_Player_Grenade;
-        public InputAction @TouchScreen => m_Wrapper.m_Player_TouchScreen;
+        public InputAction @DragScreen => m_Wrapper.m_Player_DragScreen;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -315,9 +315,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grenade.started += instance.OnGrenade;
             @Grenade.performed += instance.OnGrenade;
             @Grenade.canceled += instance.OnGrenade;
-            @TouchScreen.started += instance.OnTouchScreen;
-            @TouchScreen.performed += instance.OnTouchScreen;
-            @TouchScreen.canceled += instance.OnTouchScreen;
+            @DragScreen.started += instance.OnDragScreen;
+            @DragScreen.performed += instance.OnDragScreen;
+            @DragScreen.canceled += instance.OnDragScreen;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -343,9 +343,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grenade.started -= instance.OnGrenade;
             @Grenade.performed -= instance.OnGrenade;
             @Grenade.canceled -= instance.OnGrenade;
-            @TouchScreen.started -= instance.OnTouchScreen;
-            @TouchScreen.performed -= instance.OnTouchScreen;
-            @TouchScreen.canceled -= instance.OnTouchScreen;
+            @DragScreen.started -= instance.OnDragScreen;
+            @DragScreen.performed -= instance.OnDragScreen;
+            @DragScreen.canceled -= instance.OnDragScreen;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -372,6 +372,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnPickGun(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
-        void OnTouchScreen(InputAction.CallbackContext context);
+        void OnDragScreen(InputAction.CallbackContext context);
     }
 }

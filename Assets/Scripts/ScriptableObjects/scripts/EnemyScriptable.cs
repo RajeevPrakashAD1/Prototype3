@@ -8,6 +8,7 @@ public class EnemyData : ScriptableObject
     public float shootingRate;
     public float shootingInterval;
     public float shootingRange;
+    public float chasingRange;
     public float speed;
     
 }

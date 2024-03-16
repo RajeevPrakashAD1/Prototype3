@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
+using Cinemachine;
 public class GunMain : MonoBehaviour
 {
    
@@ -11,12 +12,12 @@ public class GunMain : MonoBehaviour
     private InputAction reloadAction;
 
     public BulletInventory inventory;
-
+    
     [SerializeField] private GameObject shootPoint;
     public GameObject bulletPrefab;
     public int bulletHoldingId;
 
-    public BulletManager bmng;
+    //public BulletManager bmng;
 
 
     private Transform mainCamera;
@@ -27,11 +28,32 @@ public class GunMain : MonoBehaviour
     private float reloadTime; // Reload time
     public bool equipped;
     public Text reloadText;
-   
+    private Vector3 originalGunPosition;
+    private Quaternion originalGunRotation;
+    private bool isRecoiling;
+    private bool shoot;
+    public Vector3 originalCameraPosition;
+    public CinemachineImpulseSource impulseSourse;
+    public HandleBulletInventory hbi;
+    public bool OnceEnabled;
+    //public GameObject bulletParent; 
 
     private void Awake()
     {
+
+        Debug.Log("awaking gun main");
         playerInput = GetComponent<PlayerInput>();
+        impulseSourse = GetComponent<CinemachineImpulseSource>();
+        hbi = GameObject.FindGameObjectWithTag("BulletParent").GetComponent<HandleBulletInventory>();
+        GameObject reloadTextObject = GameObject.FindWithTag("ReloadingText");
+
+
+        // Check if the GameObject is found
+        if (reloadTextObject != null)
+        {
+            // Get the Text component from the GameObject
+            reloadText = reloadTextObject.GetComponent<Text>();
+        }
 
         if (playerInput != null)
         {
@@ -50,68 +72,92 @@ public class GunMain : MonoBehaviour
         mainCamera = Camera.main.transform;
 
         // Initialize ammo values based on gun data
-        maxAmmo = gunData.magazineSize;
-        
-        currentAmmo = maxAmmo;
-       // Debug.Log("maxammo " + maxAmmo + " " + currentAmmo);
-       
-        reloadTime = gunData.reloadTime;
         
 
-        
+        Reload();
     }
     private void Update()
     {
 
-        //if (equipped) chooseBullet();
-       
+        if (equipped) chooseBullet();
+        if (shoot) ShootGun();
     }
     public void chooseBullet()
     {
-        if (!equipped) return;
+        if (!equipped) { SetGun(); return; }
         // BulletManager bmng = bulletParent.GetComponent<BulletManager>();
-        
-        
-        bulletPrefab = bmng.bullet;
+        if (bulletPrefab != null) return;
+        (GameObject _bulletPrefab, int _bulletHoldingId) = hbi.ChooseBullet(gunData.bulletType);
+        bulletPrefab = _bulletPrefab;
+        bulletHoldingId = _bulletHoldingId;
+        SetGun();
+        /*bulletPrefab = bmng.bullet;
         bulletHoldingId = bmng.BulletHoldingid;
       //  Debug.Log(this.gameObject + "  choosing bullet" + bmng.bullet + " " + bmng.BulletHoldingid + " " + bulletHoldingId);
         if (inventory == null)
         {
             inventory = bmng.bulletInventory;
-        }
-        
+        }*/
+
     }
 
     private void OnEnable()
     {
-        Debug.Log("enabling....");
+        Debug.Log("enabling....gun script");
 
-        shootAction.performed += _ => ShootGun();
+        shootAction.started += _ => ShootStart();
+        shootAction.canceled += _ => OverShoot();
         reloadAction.performed += _ => Reload();
+        maxAmmo = gunData.magazineSize;
+        if (OnceEnabled == false)
+        {
+            currentAmmo = maxAmmo;
+            // Debug.Log("maxammo " + maxAmmo + " " + currentAmmo);
+
+            reloadTime = gunData.reloadTime;
+            originalGunPosition = transform.localPosition;
+            originalGunRotation = transform.localRotation;
+            OnceEnabled = true;
+        }
+        SetGun();
     }
 
     private void OnDisable()
     {
-        shootAction.performed -= _ => ShootGun();
+        shootAction.started -= _ => ShootStart();
+        shootAction.canceled -= _ => OverShoot();
         reloadAction.performed -= _ => Reload();
+    }
+
+    public void ShootStart()
+    {
+        originalCameraPosition = Camera.main.transform.position;
+        shoot = true;
+    }
+    public void OverShoot()
+    {
+        shoot = false;
+      
+        StartCoroutine(RecoverFromRecoil());
+
     }
     private void Start()
     {
-        GameObject reloadTextObject = GameObject.FindWithTag("ReloadingText");
-
-
-        // Check if the GameObject is found
-        if (reloadTextObject != null)
-        {
-            // Get the Text component from the GameObject
-            reloadText = reloadTextObject.GetComponent<Text>();
-        }
+        
 
         
 
     }
 
-
+    private void SetGun()
+    {
+        if (!equipped) { reloadText.text = "No Gun"; return; }
+        if (bulletPrefab == null) reloadText.text = "Find bullet " + gunData.bulletType + "mm";
+        else
+        {
+            reloadText.text = currentAmmo.ToString();
+        }
+    }
 
     private void ShootGun()
     {
@@ -129,8 +175,9 @@ public class GunMain : MonoBehaviour
             //Debug.Log("initiating bullet");
             if (currentAmmo > 0)
             {
-               
-
+                
+                ApplyRecoil();
+                
 
                 GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, Quaternion.identity);
                 BulletCtrl bulletCtrl = bullet.GetComponent<BulletCtrl>();
@@ -159,8 +206,8 @@ public class GunMain : MonoBehaviour
                     /*  Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
                       bulletCtrl.target = hit.point;
                       bulletCtrl.hit = true;*/
-                    Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
-                    Vector3 direction = hit.point - bullet.transform.position;
+                   // Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
+                    Vector3 direction = hit.point - (bullet.transform.position);
                     if (rb != null)
                     {
                         rb.AddForce(direction.normalized * (500 *bulletCtrl.bulletData.speed));
@@ -191,7 +238,7 @@ public class GunMain : MonoBehaviour
         }
         else
         {   if (!equipped) reloadText.text = "No Gun";
-            else if(bulletPrefab == null || currentAmmo <= 0) reloadText.text = "No bullet";
+            else if(bulletPrefab == null || currentAmmo <= 0) reloadText.text = "Find bullet "+ gunData.bulletType+"mm";
         }
     }
 
@@ -231,5 +278,37 @@ public class GunMain : MonoBehaviour
         Debug.Log("Reload complete.");
         canShoot = true;
         if (reloadText) reloadText.text = currentAmmo.ToString();
+    }
+
+    private void ApplyRecoil()
+    {
+        if (!isRecoiling)
+        {
+            isRecoiling = true;
+            
+            // Apply jittery recoil effect
+            float randomRecoil = gunData.recoil;
+            Vector3 recoilOffset = new Vector3(0f, 0f, -randomRecoil);
+            //transform.localPosition += recoilOffset;
+            mainCamera.localPosition += recoilOffset*2;
+            //impulseSourse.GenerateImpulseWithForce(gunData.recoil);
+            // Start recovering from recoil after a delay
+            StartCoroutine(RecoverFromRecoil());
+        }
+        //transform.localRotation *= Quaternion.Euler(Vector3.up * gunData.recoil);
+    }
+    private IEnumerator RecoverFromRecoil()
+    {
+        // Delay before recovering from recoil
+        yield return new WaitForSeconds(0.5f); // Adjust as needed
+        isRecoiling = false;
+        // Bring the gun back to its original position and rotation
+        while (transform.localPosition != originalGunPosition || transform.localRotation != originalGunRotation)
+        {
+            //transform.localPosition = Vector3.MoveTowards(transform.localPosition, originalGunPosition, Time.deltaTime * gunData.recoilRecoverySpeed);
+            //transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalGunRotation, Time.deltaTime * gunData.recoilRecoverySpeed);
+            //mainCamera.localPosition = Vector3.MoveTowards(mainCamera.localPosition, originalCameraPosition, Time.deltaTime * gunData.recoilRecoverySpeed);
+            yield return null;
+        }
     }
 }

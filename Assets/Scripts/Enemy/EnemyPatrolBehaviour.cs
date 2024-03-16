@@ -10,7 +10,7 @@ public class EnemyPatrol : MonoBehaviour
     private NavMeshAgent navMeshAgent;      // Reference to the NavMeshAgent component
     private Vector3 destination;            // Destination for the enemy to move towards
     public EnemyData enemyData;
-    
+    public Transform player;
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -27,6 +27,20 @@ public class EnemyPatrol : MonoBehaviour
             // Generate a random destination on the NavMesh surface
             GenerateRandomDestination();
         }
+        if (player != null && Vector3.Distance(transform.position, player.position) <= enemyData.chasingRange)
+        {
+            navMeshAgent.SetDestination(player.position);
+        }
+        else
+        {
+            if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 5f)
+            {
+                // Generate a random destination on the NavMesh surface
+                GenerateRandomDestination();
+            }
+        }
+
+        
     }
 
   

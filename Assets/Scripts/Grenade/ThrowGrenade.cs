@@ -55,15 +55,14 @@ public class ThrowGrenade : MonoBehaviour
             ChargeThrow();
         }
     }
-    private void OnEnable()
+    private void Start()
     {
-        Debug.Log("enabling....grenade");
-
+        
         GrenadeShootAction.started += _ => OnHoldStarted();
         GrenadeShootAction.canceled += _ => OnHoldCanceled();
      }
 
-    private void OnDisable()
+    private void Destroy()
     {
         GrenadeShootAction.started -= _ => OnHoldStarted();
         GrenadeShootAction.canceled -= _ => OnHoldCanceled();
@@ -72,6 +71,8 @@ public class ThrowGrenade : MonoBehaviour
 
     void OnHoldStarted()
     {
+        Debug.Log("start");
+        if (currentAmmo <= 0) return;
         isHolding = true;
         holdDuration = 0f;
         trajectoryLine.enabled = true;
@@ -129,6 +130,7 @@ public class ThrowGrenade : MonoBehaviour
 
             // Reduce ammo count
             currentAmmo--;
+            tm.text = currentAmmo.ToString();
         }
     }
 

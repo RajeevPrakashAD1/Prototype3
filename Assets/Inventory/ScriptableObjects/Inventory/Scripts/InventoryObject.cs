@@ -26,32 +26,37 @@ public abstract class InventoryObject<T> : ScriptableObject where T : InventoryS
         }
         SetEmptySlot(_item, _amount);
     }
+    
 
     public T SetEmptySlot(Item _item, int _amount)
     {
         for (int i = 0; i < Items.Length; i++)
         {
-            if (Items[i].ID <= 1)
+            if (Items[i].ID < 1)
             {
                 Items[i].UpdateSlot(_item.Id, _item, _amount);
                 return Items[i];
             }
         }
-        return null;
+        Items[Items.Length - 1].UpdateSlot(_item.Id, _item, _amount);
+        return Items[Items.Length - 1];
     }
+   
 
-    public void MoveItem(T item1, T item2)
+    public bool MoveItem(T item1, T item2)
     {
         if (item1.GetType() == item2.GetType())
         {
             T temp = (T)System.Activator.CreateInstance(typeof(T), item2.ID, item2.item, item2.amount);
             item2.UpdateSlot(item1.ID, item1.item, item1.amount);
             item1.UpdateSlot(temp.ID, temp.item, temp.amount);
+            return true;
         }
         else
         {
             Debug.LogError("Cannot move items of different types.");
         }
+        return false;
     }
 
     public void RemoveItem(Item _item)
@@ -85,16 +90,16 @@ public abstract class InventoryObject<T> : ScriptableObject where T : InventoryS
 
 
 
-
+/*
 [System.Serializable]
 public class Inventory
 {
     public InventoryPowerUpSlot[] PowerUpItems = new InventoryPowerUpSlot[6];
-    public InventoryGunSlot[] GunItems = new InventoryGunSlot[4]; // Array for gun slots
+    public InventoryGunSlot[] GunItems = new InventoryGunSlot[2]; // Array for gun slots
     public InventoryBulletSlot[] BulletItems = new InventoryBulletSlot[4]; // Array for bullet slots
 
     
-}
+}*/
 
 
 
@@ -167,9 +172,23 @@ public class InventoryPowerUpSlot : InventorySlot
 [System.Serializable]
 public class InventoryGunSlot : InventorySlot
 {
+    public GameObject gun;
+    public InventoryGunSlot() : base()
+    {
+
+    }
     public InventoryGunSlot(int _id, Item _item,int _amount) : base(_id, _item,_amount)
     {
     }
+    public void UpdateSlot(int _id, Item _item, int _amount,GameObject obj) // Added _amount parameter
+    {
+        ID = _id;
+        item = _item;
+        amount = _amount;
+        gun = obj;
+    }
+
+
 }
 
 

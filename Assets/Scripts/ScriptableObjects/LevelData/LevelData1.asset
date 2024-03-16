@@ -20,3 +20,4 @@ MonoBehaviour:
   smallEnemyFireRate: 5
   smallEnemyDamage: 5
   bigEnemyDamage: 5
+  numOfEnemiesToKill: 1

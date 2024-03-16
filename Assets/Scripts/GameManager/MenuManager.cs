@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+    public PlayerInput playerInput;
+
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        
+    }
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
@@ -16,7 +23,9 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Starting game...");
+
         SceneManager.LoadScene(1);
+        StartCoroutine(LoadGameScene());
         
     }
 
@@ -35,10 +44,13 @@ public class MenuManager : MonoBehaviour
         {
             Debug.Log("calling reset");
            GameManager.Instance.Reset();
+
         }
         else
         {
             Debug.Log("no instance found");
         }
+        playerInput.enabled = false;
+        playerInput.enabled = true;
     }
 }
