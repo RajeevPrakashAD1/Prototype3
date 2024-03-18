@@ -38,6 +38,7 @@ public class GrenadeCtrl : MonoBehaviour
             {
                 //Debug.Log("destrying..enemy");
                 Destroy(nearbyObject.gameObject);
+                GameManager.Instance.KillEnemy();
 
             }else if(nearbyObject.gameObject.tag == "Player")
             {

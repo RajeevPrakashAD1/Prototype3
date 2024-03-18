@@ -41,7 +41,7 @@ public class GunMain : MonoBehaviour
     private void Awake()
     {
 
-        Debug.Log("awaking gun main");
+       // Debug.Log("awaking gun main");
         playerInput = GetComponent<PlayerInput>();
         impulseSourse = GetComponent<CinemachineImpulseSource>();
         hbi = GameObject.FindGameObjectWithTag("BulletParent").GetComponent<HandleBulletInventory>();
@@ -103,7 +103,7 @@ public class GunMain : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("enabling....gun script");
+       // Debug.Log("enabling....gun script");
 
         shootAction.started += _ => ShootStart();
         shootAction.canceled += _ => OverShoot();
@@ -115,7 +115,7 @@ public class GunMain : MonoBehaviour
             // Debug.Log("maxammo " + maxAmmo + " " + currentAmmo);
 
             reloadTime = gunData.reloadTime;
-            originalGunPosition = transform.localPosition;
+            //originalGunPosition = transform.localPosition;
             originalGunRotation = transform.localRotation;
             OnceEnabled = true;
         }
@@ -138,7 +138,7 @@ public class GunMain : MonoBehaviour
     {
         shoot = false;
       
-        StartCoroutine(RecoverFromRecoil());
+        //StartCoroutine(RecoverFromRecoil());
 
     }
     private void Start()
@@ -208,6 +208,7 @@ public class GunMain : MonoBehaviour
                       bulletCtrl.hit = true;*/
                    // Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
                     Vector3 direction = hit.point - (bullet.transform.position);
+                    bullet.transform.rotation = Quaternion.LookRotation(direction);
                     if (rb != null)
                     {
                         rb.AddForce(direction.normalized * (500 *bulletCtrl.bulletData.speed));
@@ -267,7 +268,7 @@ public class GunMain : MonoBehaviour
         }
 
         
-        Debug.Log("Reloading..."+currentAmmo+ " "+ maxAmmo);
+        //Debug.Log("Reloading..."+currentAmmo+ " "+ maxAmmo);
         Invoke("ResetReload", reloadTime); // Reset reload time
         canShoot = false;
     }
@@ -282,6 +283,7 @@ public class GunMain : MonoBehaviour
 
     private void ApplyRecoil()
     {
+        Debug.Log("applying recoid");
         if (!isRecoiling)
         {
             isRecoiling = true;
@@ -289,24 +291,27 @@ public class GunMain : MonoBehaviour
             // Apply jittery recoil effect
             float randomRecoil = gunData.recoil;
             Vector3 recoilOffset = new Vector3(0f, 0f, -randomRecoil);
-            //transform.localPosition += recoilOffset;
-            mainCamera.localPosition += recoilOffset*2;
+            originalGunPosition = transform.localPosition;
+            transform.localPosition += recoilOffset;
+            //mainCamera.localPosition += recoilOffset*2;
             //impulseSourse.GenerateImpulseWithForce(gunData.recoil);
             // Start recovering from recoil after a delay
             StartCoroutine(RecoverFromRecoil());
         }
-        //transform.localRotation *= Quaternion.Euler(Vector3.up * gunData.recoil);
+        originalGunRotation = transform.localRotation;
+        transform.localRotation *= Quaternion.Euler(Vector3.up * gunData.recoil);
     }
     private IEnumerator RecoverFromRecoil()
     {
+        Debug.Log("applying recover from recoil");
         // Delay before recovering from recoil
         yield return new WaitForSeconds(0.5f); // Adjust as needed
         isRecoiling = false;
         // Bring the gun back to its original position and rotation
         while (transform.localPosition != originalGunPosition || transform.localRotation != originalGunRotation)
         {
-            //transform.localPosition = Vector3.MoveTowards(transform.localPosition, originalGunPosition, Time.deltaTime * gunData.recoilRecoverySpeed);
-            //transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalGunRotation, Time.deltaTime * gunData.recoilRecoverySpeed);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, originalGunPosition, Time.deltaTime * gunData.recoilRecoverySpeed);
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalGunRotation, Time.deltaTime * gunData.recoilRecoverySpeed);
             //mainCamera.localPosition = Vector3.MoveTowards(mainCamera.localPosition, originalCameraPosition, Time.deltaTime * gunData.recoilRecoverySpeed);
             yield return null;
         }

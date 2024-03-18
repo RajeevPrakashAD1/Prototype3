@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 00febc5ad58cd71409a43d611b359781, type: 2}
+  - {fileID: 2100000, guid: 4d07f2c123896c848ae84819fea44c2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -154,6 +154,7 @@ MonoBehaviour:
   type: PowerUp
   PowerUpitem: {fileID: 11400000, guid: f5c4b71ac0ecca247b3ce72088b688ff, type: 2}
   GunItem: {fileID: 0}
+  BulletItem: {fileID: 0}
 --- !u!222 &402870388311093713
 CanvasRenderer:
   m_ObjectHideFlags: 0

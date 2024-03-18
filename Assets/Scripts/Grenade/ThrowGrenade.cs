@@ -21,7 +21,7 @@ public class ThrowGrenade : MonoBehaviour
 
     private Transform mainCamera;
  
-    private int currentAmmo = 1; // Current ammo count
+    private int currentAmmo = 3; // Current ammo count
     private bool isHolding;
 
     private float holdDuration = 0f;
@@ -71,7 +71,7 @@ public class ThrowGrenade : MonoBehaviour
 
     void OnHoldStarted()
     {
-        Debug.Log("start");
+        Debug.Log("start...grenade");
         if (currentAmmo <= 0) return;
         isHolding = true;
         holdDuration = 0f;

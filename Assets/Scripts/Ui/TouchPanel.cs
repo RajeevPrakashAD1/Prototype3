@@ -1,63 +1,57 @@
-/*using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Cinemachine;
 using UnityEngine.EventSystems;
-public class TouchScreen : MonoBehaviour
+
+public class TouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public PlayerInput playerInput;
-    private InputAction dragScreen;
-    public CinemachineInputProvider inputProvider;
-   // public CinemachineVirtualCamera cm1;
+    [HideInInspector]
+    public Vector2 TouchDist;
+    [HideInInspector]
+    public Vector2 PointerOld;
+    [HideInInspector]
+    protected int PointerId;
+    [HideInInspector]
+    public bool Pressed;
 
-    void Awake()
+    // Use this for initialization
+    void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        dragScreen = playerInput.actions["DragScreen"];
+        Debug.Log("touching..panel");
     }
 
-    public void OnEnable()
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("enabling  touch panel");
-        dragScreen.started += ctx => StartedDragging(ctx);
-        dragScreen.performed += ctx => Dragging(ctx);
-        dragScreen.canceled += ctx => StopDragging(ctx);
-    }
-
-    public void OnDisable()
-    {
-        dragScreen.started -= ctx => StartedDragging(ctx);
-        dragScreen.performed -= ctx => Dragging(ctx);
-        dragScreen.canceled -= ctx => StopDragging(ctx);
-    }
-
-    void StartedDragging(InputAction.CallbackContext ctx)
-    {
-        Debug.Log("Started Dragging");
-        
-    }
-
-    void Dragging(InputAction.CallbackContext ctx)
-    {
-        inputProvider.enabled = true;
-        float horizontalInput = ctx.ReadValue<Vector2>().x;
-        float verticalInput = ctx.ReadValue<Vector2>().y;
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (Pressed)
         {
-            // Do not execute drag action if touch is over a UI element
-            inputProvider.enabled = false;
-            Debug.Log("Touched on gameobject");
-            return;
+            if (PointerId >= 0 && PointerId < Input.touches.Length)
+            {
+                TouchDist = Input.touches[PointerId].position - PointerOld;
+                PointerOld = Input.touches[PointerId].position;
+            }
+            else
+            {
+                TouchDist = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - PointerOld;
+                PointerOld = Input.mousePosition;
+            }
         }
-       
-        
+        else
+        {
+            TouchDist = new Vector2();
+        }
     }
 
-    void StopDragging(InputAction.CallbackContext ctx)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        //inputProvider.enabled = true;
-        Debug.Log("Stopped Dragging");
+        Debug.Log("onpointer down...");
+        Pressed = true;
+        PointerId = eventData.pointerId;
+        PointerOld = eventData.position;
     }
+
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Pressed = false;
+    }
+
 }
-*/

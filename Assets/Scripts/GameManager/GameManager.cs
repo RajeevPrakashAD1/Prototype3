@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
+using UnityEngine.UI;
+
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
@@ -12,11 +15,12 @@ public class GameManager : MonoBehaviour
     public int playerHealth = 9900;
     public HealthBar healthBar;
     public GameObject player;
+    public GameObject BigEnemy;
     public GameObject InstPrompt;
     public LevelData levelData;
     private float playerSpeed = 15f;
     public int currentLevel = 1;
-
+    
     // Current weapon
     public GameObject currentWeapon;
     //collided weapon
@@ -26,8 +30,12 @@ public class GameManager : MonoBehaviour
     // Public property to access the singleton instance
     public int numofEnemyKill = 0;
     public GameObject prompt;
-    private bool bigEnemyPromptDisplayed;
+    private InstPrompt promptScript;
     public int ActiveSlot =0;
+    private bool bigEnemyPromptDisplayed;
+    public bool gamePaused;
+    public GameObject EnemyKillText;
+    public GameObject BigEnemyParent;
 
     public static GameManager Instance
     {
@@ -49,10 +57,19 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    private void Awake()
+    public IEnumerator Start()
     {
-        //Debug.Log("calling gameManagerAwake" + healthBar + player);
+        Time.timeScale = 0;
+        yield return new WaitForSeconds(2f);
+        playerInput.enabled = false;
+        playerInput.enabled = true;
+        Time.timeScale = 1;
+    }
+    public void Awake()
+    {
+        Debug.Log("calling gameManagerAwake" + healthBar + player);
         // Ensure there's only one instance of the GameManager
+        //Debug.Log("calling awake");
         if (instance == null)
         {
             instance = this;
@@ -62,15 +79,26 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
         //levelData = GameManager.instance.levelData;
         Application.targetFrameRate = 60;
+        BigEnemyParent = GameObject.FindGameObjectWithTag("BigEnemyParent");
+        BigEnemyParent.SetActive(false);
+        EnemyKillText = GameObject.FindGameObjectWithTag("EnemyKillText");
+        prompt = GameObject.FindGameObjectWithTag("Prompt");
         playerInput = GetComponent<PlayerInput>();
+        promptScript = prompt.GetComponentInChildren<InstPrompt>();
+        promptScript.Invoke("Kill " + levelData.numOfEnemiesToKill.ToString() + " Enemy to Start Raid Battle");
+        Debug.Log("calling awake of game manager");
+     
+        PauseGameForSeconds(3f);
 
     }
    
     public void Reset()
     {
+        Debug.Log("calling reset of gamemanager");
         player = GameObject.FindGameObjectWithTag("Player");
        /* if(prompt == null)
         {
@@ -84,20 +112,26 @@ public class GameManager : MonoBehaviour
        /* ii.InitializeInventories();*/
 
 
-        if (player == null)
-        {
-            //Debug.Log("didnt get playere");
-        }
+       
         GameObject healthBarObject = GameObject.FindGameObjectWithTag("HealthBar");
         if(healthBarObject != null)
         {
             //Debug.Log("got health bar");
             healthBar = healthBarObject.GetComponent<HealthBar>();
         }
-        else
+
+        if (BigEnemyParent == null)
         {
-            Debug.Log("didnt get healthBar");
+            BigEnemyParent = GameObject.FindGameObjectWithTag("BigEnemyParent");
+            BigEnemyParent.SetActive(false);
         }
+        EnemyKillText = GameObject.FindGameObjectWithTag("EnemyKillText");
+        prompt = GameObject.FindGameObjectWithTag("Prompt");
+        playerInput = GetComponent<PlayerInput>();
+        promptScript = prompt.GetComponentInChildren<InstPrompt>();
+        promptScript.Invoke("Kill " + levelData.numOfEnemiesToKill.ToString() + " Enemy to Start Raid Battle");
+        PauseGameForSeconds(3f);
+
         playerHealth = 9900;
         playerSpeed = 15f;
         numofEnemyKill = 0;
@@ -183,12 +217,21 @@ public class GameManager : MonoBehaviour
 
     public void KillEnemy()
     {
-        numofEnemyKill++;
-        if(numofEnemyKill >= levelData.numOfEnemiesToKill && !bigEnemyPromptDisplayed) { }
+        
+        numofEnemyKill += 1;
+        EnemyKillText.GetComponent<Text>().text = "EnemyKill:" + numofEnemyKill.ToString();
+        Debug.Log("callling kill enemy" + numofEnemyKill);
+        if (numofEnemyKill >= levelData.numOfEnemiesToKill && !bigEnemyPromptDisplayed)
         {
-            //will show prompt of big enemy appearance.
-            TextMeshProUGUI tmp = prompt.GetComponentInChildren<TextMeshProUGUI>();
-            tmp.text = "Go Kill All The Big Enemy To Complete this Level";
+            //will show prompt of big enemy appearance.p
+            BigEnemyParent.SetActive(true);
+            prompt.SetActive(true);
+            
+             
+            string txt = "Kill " + levelData.numberOfBigEnemies.ToString() + " BigEnemy to  complete this level";
+            promptScript.Invoke(txt);
+            PauseGameForSeconds(3f);
+            
             bigEnemyPromptDisplayed = true;
 
         }
@@ -199,5 +242,19 @@ public class GameManager : MonoBehaviour
         ActiveSlot = i;
 
         player.GetComponent<PickGun>().Pick();
+    }
+    void PauseGameForSeconds(float duration)
+    {
+        
+        Time.timeScale = 0f;
+        StartCoroutine(ResumeAfterDelay(duration));
+    }
+
+    IEnumerator ResumeAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        Time.timeScale = 1f;
+        
     }
 }

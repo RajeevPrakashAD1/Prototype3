@@ -45,7 +45,7 @@ public class HandleBulletInventory : MonoBehaviour
             if (_slot.Value.ID >= 0)
 
             {
-                Debug.Log("i have something");
+                //Debug.Log("i have something");
                 int type = database.GetItemBullet[_slot.Value.item.Id].bulletdata.type;
                 if (i == type) return (database.GetItemBullet[_slot.Value.item.Id].model, _slot.Value.item.Id);
             }

@@ -26,6 +26,9 @@ TagManager:
   - GroundBullet
   - Grenade
   - Prompt
+  - EnemyKillText
+  - BigEnemyParent
+  - BIgEnemyParent
   layers:
   - Default
   - TransparentFX

@@ -67,6 +67,7 @@ public class BulletCtrl : MonoBehaviour
         // Destroy the bullet and the collided object
         if (collision.gameObject.tag == "Enemy")
         {
+            Debug.Log("destroying enemy...");
            Destroy(gameObject);
            Destroy(collision.gameObject);
             GameManager.Instance.KillEnemy();

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6724826884766900134}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.3, z: -14.4}
+  m_LocalPosition: {x: -0.67, y: -4.3, z: -14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7b9c331ac0582ea40aa53135e031503d, type: 2}
+  - {fileID: 2100000, guid: cb4af5a96cd5f6a4f9851b798de070fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,3 +149,4 @@ MonoBehaviour:
   type: PowerUp
   PowerUpitem: {fileID: 11400000, guid: 6645ea95227d5bb4dbf5fc409d30201a, type: 2}
   GunItem: {fileID: 0}
+  BulletItem: {fileID: 0}

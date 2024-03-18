@@ -24,7 +24,7 @@ public class PowerUpSpawner : MonoBehaviour
             for (int j = 0; j < itemsToSpawn; j++)
             {
 
-                Vector3 randomPoint = transform.position + Random.insideUnitSphere * spawnRadius;
+                Vector3 randomPoint = transform.position + Random.insideUnitSphere * spawnRadius + new Vector3(0,3f,0);
                 //Debug.Log("spawning.....2" + randomPoint);
                 if (GetRandomNavMeshPosition(out randomPoint))
                 {
