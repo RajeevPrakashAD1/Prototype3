@@ -5,7 +5,7 @@ using TMPro;
 public class ThrowGrenade : MonoBehaviour
 {
     // Start is called before the first frame update
-    
+    public Transform player;
     private PlayerInput playerInput;
     private InputAction GrenadeShootAction;
    
@@ -31,11 +31,13 @@ public class ThrowGrenade : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main.transform;
-        playerInput = GetComponent<PlayerInput>();
+        //for some reason its not able to get reference of player input from attached player input of this object
+
+        playerInput = player.GetComponent<PlayerInput>();
         tm.text = currentAmmo.ToString();
         if (playerInput != null)
         {
-            GrenadeShootAction = playerInput.actions["Grenade"];
+            GrenadeShootAction = playerInput.actions["ShootGrenade"];
             
 
         }

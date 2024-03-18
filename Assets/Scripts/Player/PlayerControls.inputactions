@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ShootGrenade",
+                    "type": "Button",
+                    "id": "c0d7d43e-f167-44a1-8161-c45d7d8f790c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -137,7 +146,7 @@
                 {
                     "name": "",
                     "id": "c708cc60-3479-4793-80d4-e909602f62ee",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -164,6 +173,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DragScreen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdb1147d-cdd5-494c-a4f9-8c9e1df187c4",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootGrenade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

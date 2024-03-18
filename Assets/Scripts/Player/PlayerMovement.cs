@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         //getting player inputs for using unity new input manager
         moveAction = playerInput.actions["Move"];
-        lookAction = playerInput.actions["Look"];
+     /*   lookAction = playerInput.actions["Look"];*/
         shootAction = playerInput.actions["Shoot"];
 
     }

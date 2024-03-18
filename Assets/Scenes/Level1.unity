@@ -757,10 +757,10 @@ RectTransform:
   - {fileID: 1848593365}
   m_Father: {fileID: 318392449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1382, y: 128}
-  m_SizeDelta: {x: 149, y: 100.4}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -154.3, y: -117.4}
+  m_SizeDelta: {x: 149, y: 100.400024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &161732748
 MonoBehaviour:
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ControlPath: <Gamepad>/rightShoulder
+  m_ControlPath: <Gamepad>/leftShoulder
 --- !u!114 &161732749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,8 +1242,8 @@ RectTransform:
   - {fileID: 434071262}
   - {fileID: 943856125}
   - {fileID: 1543046481}
-  - {fileID: 161732747}
   - {fileID: 770660494}
+  - {fileID: 161732747}
   - {fileID: 1153250744}
   - {fileID: 1569146548}
   - {fileID: 1214548577}
@@ -2853,10 +2853,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 318392449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -112.8, y: -128.3}
-  m_SizeDelta: {x: 142.3, y: 100.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 393, y: 135.5}
+  m_SizeDelta: {x: 142.30005, y: 100.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770660495
 MonoBehaviour:
@@ -2870,7 +2870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ControlPath: <Gamepad>/leftShoulder
+  m_ControlPath: <Gamepad>/rightTrigger
 --- !u!114 &770660496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,6 +3401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0b54894aa9ba94489913be08927295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1679985029}
   shootPoint: {fileID: 557639586}
   grenadePrefab: {fileID: 8107319841712821552, guid: 5a19b1b7a585cc94d97b861e7dc7d5e9, type: 3}
   trajectoryLine: {fileID: 835250870}
@@ -3434,7 +3435,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 963194227}
 --- !u!120 &835250870
 LineRenderer:
   serializedVersion: 2

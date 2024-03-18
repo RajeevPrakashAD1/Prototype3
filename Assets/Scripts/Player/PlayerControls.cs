@@ -98,6 +98,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ShootGrenade"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0d7d43e-f167-44a1-8161-c45d7d8f790c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -159,7 +168,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c708cc60-3479-4793-80d4-e909602f62ee"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -188,6 +197,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DragScreen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdb1147d-cdd5-494c-a4f9-8c9e1df187c4"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShootGrenade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +224,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_PickGun = m_Player.FindAction("PickGun", throwIfNotFound: true);
         m_Player_Grenade = m_Player.FindAction("Grenade", throwIfNotFound: true);
         m_Player_DragScreen = m_Player.FindAction("DragScreen", throwIfNotFound: true);
+        m_Player_ShootGrenade = m_Player.FindAction("ShootGrenade", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PickGun;
     private readonly InputAction m_Player_Grenade;
     private readonly InputAction m_Player_DragScreen;
+    private readonly InputAction m_Player_ShootGrenade;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -285,6 +307,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @PickGun => m_Wrapper.m_Player_PickGun;
         public InputAction @Grenade => m_Wrapper.m_Player_Grenade;
         public InputAction @DragScreen => m_Wrapper.m_Player_DragScreen;
+        public InputAction @ShootGrenade => m_Wrapper.m_Player_ShootGrenade;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -318,6 +341,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DragScreen.started += instance.OnDragScreen;
             @DragScreen.performed += instance.OnDragScreen;
             @DragScreen.canceled += instance.OnDragScreen;
+            @ShootGrenade.started += instance.OnShootGrenade;
+            @ShootGrenade.performed += instance.OnShootGrenade;
+            @ShootGrenade.canceled += instance.OnShootGrenade;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -346,6 +372,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DragScreen.started -= instance.OnDragScreen;
             @DragScreen.performed -= instance.OnDragScreen;
             @DragScreen.canceled -= instance.OnDragScreen;
+            @ShootGrenade.started -= instance.OnShootGrenade;
+            @ShootGrenade.performed -= instance.OnShootGrenade;
+            @ShootGrenade.canceled -= instance.OnShootGrenade;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -373,5 +402,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPickGun(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
         void OnDragScreen(InputAction.CallbackContext context);
+        void OnShootGrenade(InputAction.CallbackContext context);
     }
 }
