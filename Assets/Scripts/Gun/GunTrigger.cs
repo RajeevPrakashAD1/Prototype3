@@ -5,16 +5,17 @@ public class GunTrigger : MonoBehaviour
     public GameObject player;
     public GameObject canvasButton; // Reference to the button on the canvas
    //public GameObject collidedGunPrefab; // Reference to the collided gun prefab
-    public GameManager gameManager;
+ 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Gun"))
         {
             // Enable the button on the canvas
+            Debug.Log("setting collided weapon");
             canvasButton.SetActive(true);
             
-            gameManager.collidedWeapon = other.gameObject;
+            GameManager.Instance.collidedWeapon = other.gameObject;
         }
     }
 
@@ -23,8 +24,9 @@ public class GunTrigger : MonoBehaviour
         if (other.CompareTag("Gun"))
         {
             // Disable the button on the canvas
+            Debug.Log("setting collided weapon null");
             canvasButton.SetActive(false);
-            gameManager.collidedWeapon = null;
+            GameManager.Instance.collidedWeapon = other.gameObject;
         }
     }
 

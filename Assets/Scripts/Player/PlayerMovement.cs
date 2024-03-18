@@ -34,13 +34,13 @@ public class PlayerMovement : MonoBehaviour
     private GameObject bulletParent;
     [SerializeField]
     private float rotationSpeed = 1f;
-   
+    public Transform playerCameraParent;
 
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction shootAction;
     private InputAction aimAction;
-
+    Vector2 rotation = Vector2.zero;
     private void Awake()
     {
         //PlayerInput = new PlayerControls();
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         //getting player inputs for using unity new input manager
         moveAction = playerInput.actions["Move"];
-     /*   lookAction = playerInput.actions["Look"];*/
+        lookAction = playerInput.actions["Look1"];
         shootAction = playerInput.actions["Shoot"];
 
     }
@@ -107,6 +107,27 @@ public class PlayerMovement : MonoBehaviour
            
 
         }
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+     /*   //new codes...
+        Vector2 lookInput = lookAction.ReadValue<Vector2>();
+        Debug.Log("lookinput are here........."+lookInput);
+        rotation.y += lookInput.x * 2f;
+        rotation.x += -lookInput.y* 2f;
+        rotation.x = Mathf.Clamp(rotation.x, -60f, 60f);
+        playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
+        transform.eulerAngles = new Vector2(0, rotation.y);*/
+
     }
 }

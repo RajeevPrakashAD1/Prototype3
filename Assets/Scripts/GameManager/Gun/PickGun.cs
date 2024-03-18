@@ -51,6 +51,7 @@ public class PickGun : MonoBehaviour
     public void AddToInventory()
     {
         PickGunButton.SetActive(false);
+        Debug.Log("gm collided weapin"+ GameManager.Instance.collidedWeapon);
         GunItemObject gunItem = GameManager.Instance.collidedWeapon.GetComponent<InventoryItem>().GunItem;
         Item itemGenerated = new Item(gunItem);
         inventory.AddItem(itemGenerated, 1, GameManager.Instance.collidedWeapon);

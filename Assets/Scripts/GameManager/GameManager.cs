@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
     public int currentLevel = 1;
     
     // Current weapon
-    public GameObject currentWeapon;
+    public GameObject currentWeapon { get; set; }
     //collided weapon
-    public GameObject collidedWeapon;
+    public GameObject collidedWeapon { get; set; }
     public Transform gunPos;
     PlayerInput playerInput;
     // Public property to access the singleton instance
@@ -57,16 +57,17 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    public IEnumerator Start()
+   /* public IEnumerator Start()
     {
         Time.timeScale = 0;
         yield return new WaitForSeconds(2f);
         playerInput.enabled = false;
         playerInput.enabled = true;
         Time.timeScale = 1;
-    }
+    }*/
     public void Awake()
     {
+     
         Debug.Log("calling gameManagerAwake" + healthBar + player);
         // Ensure there's only one instance of the GameManager
         //Debug.Log("calling awake");
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
         promptScript = prompt.GetComponentInChildren<InstPrompt>();
         promptScript.Invoke("Kill " + levelData.numOfEnemiesToKill.ToString() + " Enemy to Start Raid Battle");
         Debug.Log("calling awake of game manager");
-     
+    
         PauseGameForSeconds(3f);
 
     }
@@ -104,9 +105,7 @@ public class GameManager : MonoBehaviour
         {
             prompt = GameObject.FindGameObjectWithTag("Prompt");
         }*/
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.enabled = false;
-        playerInput.enabled = true;
+     
 
         InventoryInitializer ii = GameObject.FindGameObjectWithTag("InventoryItemDisplay").GetComponent<InventoryInitializer>();
        /* ii.InitializeInventories();*/
@@ -131,6 +130,8 @@ public class GameManager : MonoBehaviour
         promptScript = prompt.GetComponentInChildren<InstPrompt>();
         promptScript.Invoke("Kill " + levelData.numOfEnemiesToKill.ToString() + " Enemy to Start Raid Battle");
         PauseGameForSeconds(3f);
+        collidedWeapon = null;
+        currentWeapon = null;
 
         playerHealth = 9900;
         playerSpeed = 15f;
@@ -257,4 +258,5 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         
     }
+    
 }
