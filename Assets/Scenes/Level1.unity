@@ -679,15 +679,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2789383231290751086, guid: 7621c9fc9df40004eaad6bd34abee685, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 302.6872
+      value: 292.89658
       objectReference: {fileID: 0}
     - target: {fileID: 2789383231290751086, guid: 7621c9fc9df40004eaad6bd34abee685, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7611167
+      value: 5.073116
       objectReference: {fileID: 0}
     - target: {fileID: 2789383231290751086, guid: 7621c9fc9df40004eaad6bd34abee685, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 233.20648
+      value: 147.4065
       objectReference: {fileID: 0}
     - target: {fileID: 2789383231290751086, guid: 7621c9fc9df40004eaad6bd34abee685, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1412,7 +1412,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1813743448}
+  - {fileID: 1413519858}
   - {fileID: 658891279}
   - {fileID: 2002214883}
   - {fileID: 2126929100}
@@ -1431,7 +1431,7 @@ RectTransform:
   - {fileID: 1569146548}
   - {fileID: 1214548577}
   - {fileID: 1189303602}
-  - {fileID: 1413519858}
+  - {fileID: 1813743448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5049,8 +5049,6 @@ MonoBehaviour:
   InstPrompt: {fileID: 0}
   levelData: {fileID: 11400000, guid: 0491a0ff477dd3e4fb715990527a840e, type: 2}
   currentLevel: 1
-  currentWeapon: {fileID: 0}
-  collidedWeapon: {fileID: 0}
   gunPos: {fileID: 0}
   numofEnemyKill: 0
   prompt: {fileID: 1189303601}
@@ -5335,7 +5333,8 @@ MonoBehaviour:
   touchField: {fileID: 943856128}
   SenstivityX: 2
   SenstivityY: 2
-  player: {fileID: 1679985028}
+  moveSpeed: 2
+  CameraFollow: {fileID: 0}
 --- !u!114 &1045494668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8047,7 +8046,8 @@ MonoBehaviour:
   touchField: {fileID: 943856128}
   SenstivityX: 2
   SenstivityY: 2
-  player: {fileID: 0}
+  moveSpeed: 2
+  CameraFollow: {fileID: 0}
 --- !u!1 &1602352579
 GameObject:
   m_ObjectHideFlags: 0
@@ -8569,7 +8569,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1679985028}
   canvasButton: {fileID: 770660493}
-  gameManager: {fileID: 994051226}
 --- !u!114 &1679985041
 MonoBehaviour:
   m_ObjectHideFlags: 0

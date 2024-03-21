@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
         playerSpeed = 15f;
         numofEnemyKill = 0;
         ActiveSlot = 0;
+        bigEnemyPromptDisplayed = false;
 
 
     }

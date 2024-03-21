@@ -7,28 +7,30 @@ public class Cinetouch : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cineCam;
     public CinemachineInputProvider pcam;
     [SerializeField] TouchPanel touchField;
-    [SerializeField] float SenstivityX = 2f;
-    [SerializeField] float SenstivityY = 2f;
-    public GameObject player;
+    [SerializeField] float SenstivityX = 5f;
+    [SerializeField] float SenstivityY = 5f;
+    [SerializeField] float moveSpeed = 2f;
+    public Transform CameraFollow;
     private PlayerInput playerInput;
     // Start is called before the first frame update
     void Awake()
     {
-        playerInput = player.GetComponent<PlayerInput>();
-        if(playerInput != null)
-        {
-            Debug.Log("player input not null in cinetouh");
-            Debug.Log("cinmachine input provide check xyaxis " + pcam.XYAxis);
-            playerInput.enabled = false;
-            playerInput.enabled = true;
-        }
+      
+     
 
    }
 
     // Update is called once per frame
     void Update()
     {
-        //cineCam. += touchField.TouchDist.x * SenstivityX * Time.deltaTime;
-        //cineCam.m_YAxis.Value += touchField.TouchDist.y * SenstivityY * Time.deltaTime;
+        if (touchField.Pressed)
+        {
+            CameraFollow.Rotate(Vector3.up, touchField.TouchDist.x * SenstivityX * Time.deltaTime, Space.World);
+            CameraFollow.Rotate(Vector3.right, -touchField.TouchDist.y * SenstivityY * Time.deltaTime, Space.Self);
+
+            // Move the CameraFollow object in the direction of drag (x and y only)
+            Vector3 moveDirection = new Vector3(touchField.TouchDist.x,0, touchField.TouchDist.y).normalized;
+            CameraFollow.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
+        }
     }
 }
