@@ -36,7 +36,9 @@ public class GameManager : MonoBehaviour
     public bool gamePaused;
     public GameObject EnemyKillText;
     public GameObject BigEnemyParent;
-
+    public bool running;
+    public bool shooting;
+    public bool isHoldingGun;
     public static GameManager Instance
     {
         get
@@ -85,7 +87,7 @@ public class GameManager : MonoBehaviour
         //levelData = GameManager.instance.levelData;
         Application.targetFrameRate = 60;
         BigEnemyParent = GameObject.FindGameObjectWithTag("BigEnemyParent");
-        BigEnemyParent.SetActive(false);
+        //BigEnemyParent.SetActive(false);
         EnemyKillText = GameObject.FindGameObjectWithTag("EnemyKillText");
         prompt = GameObject.FindGameObjectWithTag("Prompt");
         playerInput = GetComponent<PlayerInput>();
@@ -94,6 +96,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("calling awake of game manager");
     
         PauseGameForSeconds(3f);
+        running = false;
+        shooting = false;
+        isHoldingGun = false;
 
     }
    
@@ -138,6 +143,9 @@ public class GameManager : MonoBehaviour
         numofEnemyKill = 0;
         ActiveSlot = 0;
         bigEnemyPromptDisplayed = false;
+        running = false;
+        shooting = false;
+        isHoldingGun = false;
 
 
     }

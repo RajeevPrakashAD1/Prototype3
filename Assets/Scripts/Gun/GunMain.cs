@@ -36,6 +36,8 @@ public class GunMain : MonoBehaviour
     public CinemachineImpulseSource impulseSourse;
     public HandleBulletInventory hbi;
     public bool OnceEnabled;
+    public Animator animator;
+    public GameObject explosionPrefab;
     //public GameObject bulletParent; 
 
     private void Awake()
@@ -46,6 +48,7 @@ public class GunMain : MonoBehaviour
         impulseSourse = GetComponent<CinemachineImpulseSource>();
         hbi = GameObject.FindGameObjectWithTag("BulletParent").GetComponent<HandleBulletInventory>();
         GameObject reloadTextObject = GameObject.FindWithTag("ReloadingText");
+       
 
 
         // Check if the GameObject is found
@@ -80,7 +83,16 @@ public class GunMain : MonoBehaviour
     {
 
         if (equipped) chooseBullet();
-        if (shoot) ShootGun();
+
+        if (shoot)
+        {
+            ShootGun();
+            GameManager.Instance.shooting = true;
+        }
+        else
+        {
+            GameManager.Instance.shooting = false;
+        }
     }
     public void chooseBullet()
     {
@@ -176,10 +188,12 @@ public class GunMain : MonoBehaviour
             if (currentAmmo > 0)
             {
                 
-                ApplyRecoil();
+                //ApplyRecoil();
                 
 
                 GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, Quaternion.identity);
+                GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                Destroy(explosion, 0.1f);
                 BulletCtrl bulletCtrl = bullet.GetComponent<BulletCtrl>();
 
                 Rigidbody rb = bullet.GetComponent<Rigidbody>();

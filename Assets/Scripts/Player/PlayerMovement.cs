@@ -41,11 +41,14 @@ public class PlayerMovement : MonoBehaviour
     private InputAction shootAction;
     private InputAction aimAction;
     Vector2 rotation = Vector2.zero;
+    private Animator animator;
+
     private void Awake()
     {
         //PlayerInput = new PlayerControls();
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
 
         //getting player inputs for using unity new input manager
         moveAction = playerInput.actions["Move"];
@@ -57,9 +60,19 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main.transform;
-        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, terrainLayerMask))
+        {
+            // Adjust player's position to match terrain height
 
-        
+            Vector3 targetPosition = hit.point + Vector3.up * controller.height / 2f;
+            Debug.Log("adjusting height" + hit.point);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * terrainFollowSpeed);
+
+
+        }
+
+
     }
   
     void Update()
@@ -87,6 +100,10 @@ public class PlayerMovement : MonoBehaviour
         move.y = 0;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
+
+
+
+
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
@@ -94,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         float targetAngle = mainCamera.eulerAngles.y;
         Quaternion Targetrotation = Quaternion.Euler(0, targetAngle, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, Targetrotation, rotationSpeed * Time.deltaTime);
-            
+
         //Debug.Log("trying to hit");
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, terrainLayerMask))
@@ -102,10 +119,23 @@ public class PlayerMovement : MonoBehaviour
             // Adjust player's position to match terrain height
 
             Vector3 targetPosition = hit.point + Vector3.up * controller.height / 2f;
-            //Debug.Log("adjusting height" + hit.point);
+           // Debug.Log("adjusting height" + hit.point);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * terrainFollowSpeed);
-           
 
+
+        }
+
+        float movementMagnitude = move.magnitude;
+        //animator.SetFloat("Speed", movementMagnitude);
+
+        // Check if player is not moving, then set animation to idle
+        if (movementMagnitude == 0f)
+        {
+            GameManager.Instance.running = false;
+        }
+        else
+        {
+            GameManager.Instance.running = true;
         }
 
 
@@ -118,16 +148,14 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
-
-     /*   //new codes...
-        Vector2 lookInput = lookAction.ReadValue<Vector2>();
-        Debug.Log("lookinput are here........."+lookInput);
-        rotation.y += lookInput.x * 2f;
-        rotation.x += -lookInput.y* 2f;
-        rotation.x = Mathf.Clamp(rotation.x, -60f, 60f);
-        playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
-        transform.eulerAngles = new Vector2(0, rotation.y);*/
+        /*   //new codes...
+           Vector2 lookInput = lookAction.ReadValue<Vector2>();
+           Debug.Log("lookinput are here........."+lookInput);
+           rotation.y += lookInput.x * 2f;
+           rotation.x += -lookInput.y* 2f;
+           rotation.x = Mathf.Clamp(rotation.x, -60f, 60f);
+           playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
+           transform.eulerAngles = new Vector2(0, rotation.y);*/
 
     }
 }

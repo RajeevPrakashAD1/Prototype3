@@ -8,8 +8,10 @@ public class BigEnemyPatrol : MonoBehaviour
 
     private int currentWaypointIndex = 0;   // Index of the current waypoint
     private NavMeshAgent navMeshAgent;      // Reference to the NavMeshAgent component
-    private Vector3 destination;            // Destination for the enemy to move towards
-    
+    private Vector3 destination;
+    public Transform player;
+    // Destination for the enemy to move towards
+
 
     void Start()
     {
@@ -26,6 +28,18 @@ public class BigEnemyPatrol : MonoBehaviour
         {
             // Generate a random destination on the NavMesh surface
             GenerateRandomDestination();
+        }
+        if (player != null && Vector3.Distance(transform.position, player.position) <= 50f)
+        {
+            navMeshAgent.SetDestination(player.position);
+        }
+        else
+        {
+            if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 5f)
+            {
+                // Generate a random destination on the NavMesh surface
+                GenerateRandomDestination();
+            }
         }
     }
 
