@@ -23,9 +23,9 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Starting game...");
-
+       // StartCoroutine(LoadGameScene());
         SceneManager.LoadScene(1);
-        StartCoroutine(LoadGameScene());
+       
         
     }
 

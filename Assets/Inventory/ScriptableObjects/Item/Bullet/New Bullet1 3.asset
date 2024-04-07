@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   speed: 9
-  damage: 10
+  damage: 60
   ttl: 3
   impactEffect: {fileID: 0}
   img: {fileID: -1176359295, guid: 2edbf53893a4c884487ca30fb2920066, type: 3}

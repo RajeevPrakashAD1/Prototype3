@@ -222,7 +222,8 @@ public class GunMain : MonoBehaviour
                       bulletCtrl.hit = true;*/
                    // Debug.Log("hit : " + hit.collider.gameObject + " " + hit.point);
                     Vector3 direction = hit.point - (bullet.transform.position);
-                    bullet.transform.rotation = Quaternion.LookRotation(direction);
+                    Vector3 bfd = shootPoint.transform.position - hit.point;
+                    bullet.transform.rotation = Quaternion.LookRotation(bfd.normalized);
                     if (rb != null)
                     {
                         rb.AddForce(direction.normalized * (500 *bulletCtrl.bulletData.speed));

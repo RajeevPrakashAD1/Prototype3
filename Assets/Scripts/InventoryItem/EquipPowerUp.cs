@@ -66,6 +66,7 @@ public class EquipPowerUp : MonoBehaviour
     {
         // Activate the protection sphere logic goes here
         protectionSphere.SetActive(true);
+        GameManager.Instance.isProtectionOn = true;
         Debug.Log("Protection sphere activated");
     }
 
@@ -74,6 +75,7 @@ public class EquipPowerUp : MonoBehaviour
     {
         // Deactivate the protection sphere logic goes here
         protectionSphere.SetActive(false);
+        GameManager.Instance.isProtectionOn = false;
         Debug.Log("Protection sphere deactivated");
     }
 

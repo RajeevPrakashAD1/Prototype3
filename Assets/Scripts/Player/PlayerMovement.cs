@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             // Adjust player's position to match terrain height
 
             Vector3 targetPosition = hit.point + Vector3.up * controller.height / 2f;
-            Debug.Log("adjusting height" + hit.point);
+            //Debug.Log("adjusting height" + hit.point);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * terrainFollowSpeed);
 
 

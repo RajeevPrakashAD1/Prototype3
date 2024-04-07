@@ -1,25 +1,31 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.InputSystem;
 public class LevelManager : MonoBehaviour
 {
 
     //public Level
     public PickGun pickGun;
-    
+
+    public PlayerInput playerInput;
 
     private void Start()
     {
+
+        playerInput = GetComponent<PlayerInput>();
         //Debug.Log("accessing something");
         if (GameManager.Instance != null)
         {
-            //Debug.Log("calling reset");
+            
+            
             GameManager.Instance.Reset();
         }
-        else
+        if(DataPersistentManager.Instance != null)
         {
-            Debug.Log("no instance found");
+            DataPersistentManager.Instance.Reset();
         }
+        playerInput.enabled = false;
+        playerInput.enabled = true;
     }
 
     // Load a level by name and pass level data to the GameManager

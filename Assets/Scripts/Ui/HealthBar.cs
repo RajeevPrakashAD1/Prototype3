@@ -7,8 +7,8 @@ public class HealthBar : MonoBehaviour
 
     public void Start()
     {
-        slider.maxValue = 9900f;
-        slider.value = 9900f;
+        slider.maxValue = 9999f;
+        slider.value = 9999f;
     }
 
     public void SetHealth(int health)

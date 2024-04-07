@@ -14,8 +14,9 @@ public class EnemyPatrol : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = enemyData.speed;
-      
+        navMeshAgent.speed = Random.Range(2f, enemyData.speed + 5f);
+       // navMeshAgent.speed = 0f;
+
 
     }
 
@@ -58,13 +59,13 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-       // Debug.Log(gameObject.name + "  collided with " + collision.gameObject.tag);
-        if(collision.gameObject.tag == "Player")
+        
+        if(collision.gameObject.tag == "Player" )
         {
-          
-           
-             //Destroy(collision.gameObject);
-            GameManager.Instance.DamagePlayer(500);
+
+           // Debug.Log(gameObject.name + "  collided with " + collision.gameObject.tag);
+
+           GameManager.Instance.DamagePlayer(500);
             Destroy(gameObject);
         }
     }

@@ -16,4 +16,4 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 380c2bd5b1b93f145a2c5c932105adfb, type: 3}
   type: 2
   description: 
-  Speedmultiplier: 1.5
+  Speedmultiplier: 1.3

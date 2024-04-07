@@ -21,7 +21,7 @@ public class ThrowGrenade : MonoBehaviour
 
     private Transform mainCamera;
  
-    private int currentAmmo = 3; // Current ammo count
+    private int currentAmmo = 10; // Current ammo count
     private bool isHolding;
 
     private float holdDuration = 0f;
@@ -73,7 +73,7 @@ public class ThrowGrenade : MonoBehaviour
 
     void OnHoldStarted()
     {
-        Debug.Log("start...grenade");
+        //Debug.Log("start...grenade");
         if (currentAmmo <= 0) return;
         isHolding = true;
         holdDuration = 0f;
@@ -105,7 +105,7 @@ public class ThrowGrenade : MonoBehaviour
 
     private void ShootGrenade(float holdDuration)
     {
-        Debug.Log("shooting grenade");
+        //Debug.Log("shooting grenade");
         if (grenadePrefab != null && currentAmmo > 0)
         {
             // Instantiate the grenade prefab at the shoot point
@@ -120,7 +120,7 @@ public class ThrowGrenade : MonoBehaviour
             }
             else
             {
-                Debug.Log(rb);
+               // Debug.Log(rb);
             }
 
             Vector3 finalDirection = (mainCamera.forward + initialThrowDirection).normalized;

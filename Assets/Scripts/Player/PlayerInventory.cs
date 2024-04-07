@@ -22,9 +22,5 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        // No need to reinitialize the PowerUpItems array here.
-        // It will be automatically initialized when the game starts.
-    }
+    
 }

@@ -12,7 +12,7 @@ public class GunTrigger : MonoBehaviour
         if (other.CompareTag("Gun"))
         {
             // Enable the button on the canvas
-            Debug.Log("setting collided weapon");
+           // Debug.Log("setting collided weapon");
             canvasButton.SetActive(true);
             
             GameManager.Instance.collidedWeapon = other.gameObject;
@@ -24,7 +24,7 @@ public class GunTrigger : MonoBehaviour
         if (other.CompareTag("Gun"))
         {
             // Disable the button on the canvas
-            Debug.Log("setting collided weapon null");
+          //  Debug.Log("setting collided weapon null");
             canvasButton.SetActive(false);
             GameManager.Instance.collidedWeapon = other.gameObject;
         }

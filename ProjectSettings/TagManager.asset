@@ -29,6 +29,9 @@ TagManager:
   - EnemyKillText
   - BigEnemyParent
   - BIgEnemyParent
+  - SummaryEnemyKillText
+  - Timer
+  - ParentNextLevelButton
   layers:
   - Default
   - TransparentFX

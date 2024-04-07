@@ -33,10 +33,11 @@ public class GrenadeCtrl : MonoBehaviour
         foreach (Collider nearbyObject in colliders)
         {
             // Check if the nearby object has a Rigidbody component
-           // Debug.Log("nearby object   "+nearbyObject.gameObject.tag);
+
+            Debug.Log(nearbyObject.gameObject.tag + ".......");
             if(nearbyObject.gameObject.tag == "Enemy")
             {
-                //Debug.Log("destrying..enemy");
+                Debug.Log("destrying..enemy");
                 Destroy(nearbyObject.gameObject);
                 GameManager.Instance.KillEnemy();
 

@@ -14,8 +14,8 @@ public class EnemyShooting : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         bulletParent = GameObject.FindGameObjectWithTag("EnemyBulletParent");
-
-        InvokeRepeating("ShootAtPlayer", 0f, enemyData.shootingInterval);
+        float initialDelay = Random.Range(2f, enemyData.shootingInterval+2f);
+        InvokeRepeating("ShootAtPlayer", 0f, initialDelay);
     }
 
     private void ShootAtPlayer()
